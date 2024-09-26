@@ -70,33 +70,38 @@
         <div class="container-fluid whole-container">
             <div class="row">
 
-                <div class="col-md-2 sidebar text-center">
-                    <small id="currentTime"> </small>
+            <div class=" sidebar-container text-center" id="sidebarContainer">
+        <div class="sidebar-content text-center">
+          <small class="c-white" id="currentTime"> </small>
 
-                    <img src="external/img/ccs_logo-removebg-preview.png"
-                        class="img-fluid logo space-sm">
-                    <h4 class="bold">Welcome, Admin!</h4>
+          <img src="external/img/ccs_logo-removebg-preview.png"
+            class="img-fluid logo space-sm">
+          <h4 class="c-white bold">Welcome, Teacher!</h4>
 
-                    <div class="navigation-links" style="text-align: left;">
-                        <span><i class="bi bi-house"></i> Home</span>
-                        <a href="teacher_dashboard.html"><p><i class="bi bi-kanban"></i> Index</p></a>
-                        <hr>
-                        <span><i class="bi bi-menu-button-wide"></i>
-                          Management</span>
-                        <a href="teacher_class_dashboard.html"><p><i
-                              class="bi bi-book"></i> Classes
-                            </p></a>
-                        <a href="teacher_subject_dashboard.html"><p><i
-                              class="bi bi-journals"></i> Subjects
-                            </p></a>
-                        <hr>
-                        <p><i class="bi bi-calendar-event"></i>
-                            Class
-                            Management</p>
-                
-                     
-                      </div>
-                </div>
+          <div class="navigation-links" style="text-align: left;">
+            <a href="teacher_dashboard.php">
+              <p><i class="bi bi-kanban"></i> Home</p>
+            </a>
+            <hr>
+            <a href="teacher_class_dashboard.php">
+              <p><i
+                  class="bi bi-book"></i> Classes
+              </p>
+            </a>
+            <a href="teacher_subject_dashboard.php">
+              <p><i
+                  class="bi bi-journals"></i> Subjects
+              </p>
+            </a>
+            <hr>
+            <p><i class="bi bi-calendar-event"></i>
+              Class
+              Management</p>
+
+
+          </div>
+        </div>
+      </div>
 
                 <div class="col">
 
@@ -150,7 +155,7 @@
                                         </span>
 
                                     </a>
-                                    <a href="index.html"a class="nav-link-span">
+                                    <a href="processes/teachers/account/logout.php"a class="nav-link-span">
                                         <button class="btn btn-csms-outline">Logout</button></a>
 
                                 </span>

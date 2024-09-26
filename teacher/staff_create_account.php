@@ -58,7 +58,6 @@
                 <div class="container login-container-with-input">
                     <form method="POST" action="processes/teachers/account/add.php">
                     <div class="form-group">
-                   
 
                     <label class="bold" for="last_name">Last Name</label>
                     <input class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
@@ -115,8 +114,6 @@
 
                     </div>
                 </div>
-
-      
         </div>
 
         <script>

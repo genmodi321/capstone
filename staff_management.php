@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
-  $_SESSION['STATUS'] = "ADMIN_NOT_LOGGED_IN";
-  header("Location: admin_login_page.php");
+    $_SESSION['STATUS'] = "ADMIN_NOT_LOGGED_IN";
+    header("Location: admin_login_page.php");
 }
 include('processes/server/conn.php');
 ?>
@@ -85,29 +85,29 @@ include('processes/server/conn.php');
                     <img src="external/img/ccs_logo-removebg-preview.png" class="img-fluid logo space-sm">
                     <h4 class="bold c-white ">Welcome, Admin!</h4>
                     <div class="navigation-links" style="text-align: left;">
-            <span><i class="bi bi-house"></i> Home</span>
-            <a href="dashboard.php">
-              <p><i class="bi bi-kanban"></i> Index</p>
-            </a>
-            <hr>
-            <span><i class="bi bi-menu-button-wide"></i> Management</span>
-            <a href="class_management.php">
-              <p><i class="bi bi-book"></i> Class Management</p>
-            </a>
-            <a href="staff_management.php">
-              <p><i class="bi bi-person-square"></i> Teacher Management</p>
-            </a>
-            <a href="subject_management.php">
-              <p><i class="bi bi-journals"></i> Subject Management</p>
-            </a>
-            <a href="semester_management.php">
-              <p><i class="bi bi-calendar-event"></i> Semester Management</p>
-            </a>
-            <hr>
-            <a href="admin_management.php">
-              <p><i class="bi bi-file-person-fill"></i> Admin User</p>
-            </a>
-          </div>
+                        <span><i class="bi bi-house"></i> Home</span>
+                        <a href="dashboard.php">
+                            <p><i class="bi bi-kanban"></i> Index</p>
+                        </a>
+                        <hr>
+                        <span><i class="bi bi-menu-button-wide"></i> Management</span>
+                        <a href="class_management.php">
+                            <p><i class="bi bi-book"></i> Class Management</p>
+                        </a>
+                        <a href="staff_management.php">
+                            <p><i class="bi bi-person-square"></i> Teacher Management</p>
+                        </a>
+                        <a href="subject_management.php">
+                            <p><i class="bi bi-journals"></i> Subject Management</p>
+                        </a>
+                        <a href="semester_management.php">
+                            <p><i class="bi bi-calendar-event"></i> Semester Management</p>
+                        </a>
+                        <hr>
+                        <a href="admin_management.php">
+                            <p><i class="bi bi-file-person-fill"></i> Admin User</p>
+                        </a>
+                    </div>
                 </div>
             </div>
             <div class="col">
@@ -218,7 +218,7 @@ include('processes/server/conn.php');
                     $sql = "SELECT * FROM staff_accounts";
                     $stmt = $pdo->query($sql);
 
-                 
+
                     if ($stmt->rowCount() > 0) {
                         echo '<table id="classes">
             <thead>
@@ -232,9 +232,9 @@ include('processes/server/conn.php');
             </thead>
             <tbody>';
 
-                
+
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                          
+
                             echo '<tr>
                 <td>' . htmlspecialchars($row['fullName']) . '</td>
                 <td>' . htmlspecialchars($row['email']) . '</td>
@@ -493,9 +493,41 @@ include('processes/server/conn.php');
                     </div>
                     <div class="mb-3">
                         <label for="class" class="form-label">Class</label>
-                        <select class="form-control" name="class" id="class">
-                            <option>Select a class</option>
+                        <select class="form-select" name="class" required>
+                            <option disabled selected>Select a class</option>
+                            <optgroup label="Information Technology Department"></optgroup>
+                            <option value="BSIT-1A">BSIT-1A</option>
+                            <option value="BSIT-1B">BSIT-1B</option>
+                            <option value="BSIT-2A">BSIT-2A</option>
+                            <option value="BSIT-2B">BSIT-2B</option>
+                            <option value="BSIT-3A">BSIT-3A</option>
+                            <option value="BSIT-3B">BSIT-3B</option>
+                            <option value="BSIT-4A">BSIT-4A</option>
+                            <option value="BSIT-4B">BSIT-4B</option>
+                            <optgroup label="Computer Science Department"></optgroup>
+                            <option value="BSCS-1A">BSCS-1A</option>
+                            <option value="BSCS-1B">BSCS-1B</option>
+                            <option value="BSCS-2A">BSCS-2A</option>
+                            <option value="BSCS-2B">BSCS-2B</option>
+                            <option value="BSCS-3A">BSCS-3A</option>
+                            <option value="BSCS-3B">BSCS-3B</option>
+                            <option value="BSCS-4A">BSCS-4A</option>
+                            <option value="BSCS-4B">BSCS-4B</option>
                         </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gender</label>
+                        <select class="form-control" name="gender" id="gender">
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone_number" class="form-label">Phone Number</label>
+                        <input type="number" class="form-control" id="phone_number" name="phone_number">
+
                     </div>
             </div>
             <div class="modal-footer">
@@ -517,13 +549,13 @@ include('processes/server/conn.php');
     };
 
     departmentSelect.addEventListener('change', function() {
-      
+
         classSelect.innerHTML = '<option>Select a class</option>';
 
-      
+
         const selectedDepartment = departmentSelect.value;
 
-   
+
         if (classes[selectedDepartment]) {
             classes[selectedDepartment].forEach(function(className) {
                 const option = document.createElement('option');
@@ -581,7 +613,25 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         <div class="mb-3">
                             <label for="class' . $row['id'] . '" class="form-label">Class</label>
                             <select class="form-control" name="class" id="class-' . $row['id'] . '">
-                                <option>Select a class</option>
+                                <option disabled selected>Select a class</option>
+                            <optgroup label="Information Technology Department"></optgroup>
+                            <option value="BSIT-1A">BSIT-1A</option>
+                            <option value="BSIT-1B">BSIT-1B</option>
+                            <option value="BSIT-2A">BSIT-2A</option>
+                            <option value="BSIT-2B">BSIT-2B</option>
+                            <option value="BSIT-3A">BSIT-3A</option>
+                            <option value="BSIT-3B">BSIT-3B</option>
+                            <option value="BSIT-4A">BSIT-4A</option>
+                            <option value="BSIT-4B">BSIT-4B</option>
+                            <optgroup label="Computer Science Department"></optgroup>
+                            <option value="BSCS-1A">BSCS-1A</option>
+                            <option value="BSCS-1B">BSCS-1B</option>
+                            <option value="BSCS-2A">BSCS-2A</option>
+                            <option value="BSCS-2B">BSCS-2B</option>
+                            <option value="BSCS-3A">BSCS-3A</option>
+                            <option value="BSCS-3B">BSCS-3B</option>
+                            <option value="BSCS-4A">BSCS-4A</option>
+                            <option value="BSCS-4B">BSCS-4B</option>
                             </select>
                         </div>
                         <div class="modal-footer">
@@ -911,4 +961,4 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
 </html>
 
-<?php include('processes/server/alerts.php')?>
+<?php include('processes/server/alerts.php') ?>

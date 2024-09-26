@@ -57,7 +57,21 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_NOT_LOGGED_IN') 
     ";
     unset($_SESSION['STATUS']);
 }
+elseif (isset($_SESSION['STATUS'])  && $_SESSION['STATUS'] == "DUPLICATE_ACCOUNT") {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Account already made!',
+            text: 'This account already exists as a duplicate. Please create a new one entirely!',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+}
 ?>
+
+
 
 <?php
 if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_LOGIN_SUCCESFUL') {
@@ -219,11 +233,108 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_SUBJECT_ADD_SUCC
     </script>
     ";
     unset($_SESSION['STATUS']);
+
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_SUBJECT_EXISTS') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Subject exists error!',
+            text: 'The subject already exists. Please enter a new one!',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+}
+?>
+
+
+
+
+<?php
+if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADDED_NEW_CLASS_SUCCESS') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Class addition succesful!',
+            text: 'You have succesfully added a new class!',
+            icon: 'success'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADDED_NEW_CLASS_FAILED') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Class addition error!',
+            text: 'There was an error in adding the class. Please try again!',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'DELETE_CLASS_SUCCESS') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Class deletion success!',
+            text: 'You have succesfully deleted the existing class!',
+            icon: 'success'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'DELETE_CLASS_ERROR') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Class deletion error!',
+            text: 'There was an error in deleting the Class. Please try again.',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'EDIT_CLASS_SUCCESS') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Class update success!',
+            text: 'You have succesfully updated the existing class details',
+            icon: 'success'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'EDIT_CLASS_ERROR') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Class update error!',
+            text: 'There was an error in updating the class details. Please try again.',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'NEW_CLASS_EXISTS') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Class exists error!',
+            text: 'The subject already exists. Please enter a new one!',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
 }
 ?>
 
 <?php
-if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'STAFF_ADDED_SUCCESFULLY') {
+if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'STAFF_ADDED_SUCCESSFULLY') {
     echo "
     <script>
         Swal.fire({
@@ -240,6 +351,17 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'STAFF_ADDED_SUCCESFULL
         Swal.fire({
             title: 'Staff addition error!',
             text: 'There was an error in adding the staff. Please try again!',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'STAFF_EMAIL_EXISTS') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Staff account exists!',
+            text: 'This email has already been in use! Please use a new one!',
             icon: 'error'
         });
     </script>
@@ -465,6 +587,12 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADD_SEMESTER_SUCCESFUL
 
 
 
+
+
 ?>
+
+
+
+
 
 

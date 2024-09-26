@@ -12,6 +12,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
  
     if ($subjectName && $subjectCode && $class && $teacher && $semester) {
         try {
+
+              // Check if the subject already exists
+              $checkSubjectStmt = $pdo->prepare("SELECT * FROM subjects WHERE name = :name OR code = :code");
+              $checkSubjectStmt->bindParam(':name', $subjectName);
+              $checkSubjectStmt->bindParam(':code', $subjectCode);
+              $checkSubjectStmt->execute();
+  
+              if ($checkSubjectStmt->rowCount() > 0) {
+                  // Subject already exists
+                  $_SESSION['STATUS'] = "ADMIN_SUBJECT_EXISTS";
+                  header('Location: ../../../subject_management.php');
+                  exit;
+              }
         
             $sql = "INSERT INTO subjects (name, code, class, teacher, semester) VALUES (:name, :code, :class, :teacher, :semester)";
             $stmt = $pdo->prepare($sql);

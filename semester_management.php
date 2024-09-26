@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
-  $_SESSION['STATUS'] = "ADMIN_NOT_LOGGED_IN";
-  header("Location: admin_login_page.php");
+    $_SESSION['STATUS'] = "ADMIN_NOT_LOGGED_IN";
+    header("Location: admin_login_page.php");
 }
 include('processes/server/conn.php');
 ?>
@@ -78,44 +78,44 @@ include('processes/server/conn.php');
     <div class="container-fluid whole-container">
         <div class="row">
 
-        <div class="sidebar-container" id="sidebarContainer">
-        <div class="sidebar-content text-center">
-          <small class="c-white" id="currentTime"> </small>
+            <div class="sidebar-container" id="sidebarContainer">
+                <div class="sidebar-content text-center">
+                    <small class="c-white" id="currentTime"> </small>
 
-          <img src="external/img/ccs_logo-removebg-preview.png" class="img-fluid logo space-sm">
-          <h4 class="bold c-white ">Welcome, Admin!</h4>
+                    <img src="external/img/ccs_logo-removebg-preview.png" class="img-fluid logo space-sm">
+                    <h4 class="bold c-white ">Welcome, Admin!</h4>
 
-          <div class="navigation-links" style="text-align: left;">
-            <span><i class="bi bi-house"></i> Home</span>
-            <a href="dashboard.php">
-              <p><i class="bi bi-kanban"></i> Index</p>
-            </a>
-            <hr>
-            <span><i class="bi bi-menu-button-wide"></i> Management</span>
-            <a href="class_management.php">
-              <p><i class="bi bi-book"></i> Class Management</p>
-            </a>
-            <a href="staff_management.php">
-              <p><i class="bi bi-person-square"></i> Teacher Management</p>
-            </a>
-            <a href="subject_management.php">
-              <p><i class="bi bi-journals"></i> Subject Management</p>
-            </a>
-            <a href="semester_management.php">
-              <p><i class="bi bi-calendar-event"></i> Semester Management</p>
-            </a>
-            <hr>
-            <a href="admin_management.php">
-              <p><i class="bi bi-file-person-fill"></i> Admin User</p>
-            </a>
-          </div>
-        </div>
-      </div>
+                    <div class="navigation-links" style="text-align: left;">
+                        <span><i class="bi bi-house"></i> Home</span>
+                        <a href="dashboard.php">
+                            <p><i class="bi bi-kanban"></i> Index</p>
+                        </a>
+                        <hr>
+                        <span><i class="bi bi-menu-button-wide"></i> Management</span>
+                        <a href="class_management.php">
+                            <p><i class="bi bi-book"></i> Class Management</p>
+                        </a>
+                        <a href="staff_management.php">
+                            <p><i class="bi bi-person-square"></i> Teacher Management</p>
+                        </a>
+                        <a href="subject_management.php">
+                            <p><i class="bi bi-journals"></i> Subject Management</p>
+                        </a>
+                        <a href="semester_management.php">
+                            <p><i class="bi bi-calendar-event"></i> Semester Management</p>
+                        </a>
+                        <hr>
+                        <a href="admin_management.php">
+                            <p><i class="bi bi-file-person-fill"></i> Admin User</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
             <div class="col">
 
                 <div
                     class="container-fluid d-flex navbar navbar-expand-lg">
-                    <a class="navbar-brand" href="#"  id="toggleButton">
+                    <a class="navbar-brand" href="#" id="toggleButton">
                         <img
                             src="external/img/ccs_logo-removebg-preview.png"
                             class="img-fluid small-logo">
@@ -226,7 +226,7 @@ include('processes/server/conn.php');
                     $stmt->execute();
                     $semesters = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-             
+
                     if (empty($semesters)) {
                         echo "<h1 style='text-align:center'>No semesters available.</h5>";
                     } else {
@@ -702,7 +702,7 @@ foreach ($semesters as $semester) { ?>
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-             
+
                 window.location.href = 'processes/admin/semester/delete.php?id=' + id;
             }
         });
@@ -718,7 +718,7 @@ foreach ($semesters as $semester) { ?>
         document.querySelector("#currentTime").textContent = "The current date and time is: " + newTime;
     }
 
-    setInterval(getTime, 1000); 
+    setInterval(getTime, 1000);
 
     $(document).ready(function() {
         $('#classes').DataTable();

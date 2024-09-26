@@ -1,8 +1,8 @@
 <?php
 session_start();
 if (!isset($_SESSION['admin_id'])) {
-  $_SESSION['STATUS'] = "ADMIN_NOT_LOGGED_IN";
-  header("Location: admin_login_page.php");
+    $_SESSION['STATUS'] = "ADMIN_NOT_LOGGED_IN";
+    header("Location: admin_login_page.php");
 }
 include('processes/server/conn.php');
 ?>
@@ -398,78 +398,78 @@ include('processes/server/conn.php');
 
                     <br>
                     <?php
-require 'processes/server/conn.php'; // Include the database connection
+                    require 'processes/server/conn.php'; // Include the database connection
 
-// Fetch classes from the database
-try {
-    $stmt = $pdo->query("SELECT id, name, subject, teacher, semester, studentTotal FROM classes ORDER BY name ASC");
+                    // Fetch classes from the database
+                    try {
+                        $stmt = $pdo->query("SELECT id, name, subject, teacher, semester, studentTotal FROM classes ORDER BY name ASC");
 
-    if ($stmt->rowCount() > 0) {
-        // Only display the table if there are classes
-        ?>
-        <table id="classes">
-            <thead>
-                <tr>
-                    <th>Class Name</th>
-                    <th>Subject Name</th>
-                    <th>Teacher</th>
-                    <th>Semester</th>
-                    <th>No. of Students</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tfoot>
-                <tr>
-                    <th>Class Name</th>
-                    <th>Subject Name</th>
-                    <th>Teacher</th>
-                    <th>Semester</th>
-                    <th>No. of Students</th>
-                    <th>Actions</th>
-                </tr>
-            </tfoot>
-            <tbody>
-                <?php
-                // If classes exist, fetch and display them
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    // Fetch the teacher's name based on the teacher's ID
-                    $teacherStmt = $pdo->prepare("SELECT fullName FROM staff_accounts WHERE id = :id");
-                    $teacherStmt->bindParam(':id', $row['teacher'], PDO::PARAM_INT);
-                    $teacherStmt->execute();
-                    $teacher = $teacherStmt->fetch(PDO::FETCH_ASSOC);
+                        if ($stmt->rowCount() > 0) {
+                            // Only display the table if there are classes
                     ?>
-                    <tr>
-                        <td><?php echo htmlspecialchars($row['name']); ?></td>
-                        <td><?php echo htmlspecialchars($row['subject']); ?></td>
-                        <td><?php echo htmlspecialchars($teacher['fullName']); ?></td>
-                        <td><?php echo htmlspecialchars($row['semester']); ?></td>
-                        <td><?php echo htmlspecialchars($row['studentTotal']); ?></td>
-                        <td>
-                            <button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#viewModal<?php echo $row['id']; ?>'>
-                                <i class='bi bi-eye'></i> View
-                            </button>
-                            <button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal<?php echo $row['id']; ?>'>
-                                <i class='bi bi-pencil'></i> Edit
-                            </button>
-                            <button type="button" class="btn btn-danger" onclick="confirmDelete(<?php echo $row['id']; ?>)">
-                                <i class="bi bi-trash"></i> Delete
-                            </button>
-                        </td>
-                    </tr>
+                            <table id="classes">
+                                <thead>
+                                    <tr>
+                                        <th>Class Name</th>
+                                        <th>Subject Name</th>
+                                        <th>Teacher</th>
+                                        <th>Semester</th>
+                                        <th>No. of Students</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>Class Name</th>
+                                        <th>Subject Name</th>
+                                        <th>Teacher</th>
+                                        <th>Semester</th>
+                                        <th>No. of Students</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                    // If classes exist, fetch and display them
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                        // Fetch the teacher's name based on the teacher's ID
+                                        $teacherStmt = $pdo->prepare("SELECT fullName FROM staff_accounts WHERE id = :id");
+                                        $teacherStmt->bindParam(':id', $row['teacher'], PDO::PARAM_INT);
+                                        $teacherStmt->execute();
+                                        $teacher = $teacherStmt->fetch(PDO::FETCH_ASSOC);
+                                    ?>
+                                        <tr>
+                                            <td><?php echo htmlspecialchars($row['name']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['subject']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['teacher']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['semester']); ?></td>
+                                            <td><?php echo htmlspecialchars($row['studentTotal']); ?></td>
+                                            <td>
+                                                <button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#viewModal<?php echo $row['id']; ?>'>
+                                                    <i class='bi bi-eye'></i> View
+                                                </button>
+                                                <button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal<?php echo $row['id']; ?>'>
+                                                    <i class='bi bi-pencil'></i> Edit
+                                                </button>
+                                                <button type="button" class="btn btn-danger" onclick="confirmDelete(<?php echo $row['id']; ?>)">
+                                                    <i class="bi bi-trash"></i> Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
                     <?php
-                }
-                ?>
-            </tbody>
-        </table>
-        <?php
-    } else {
-        // If no classes exist, display a message
-        echo "<h1 class='text-center'>No classes available</h1>";
-    }
-} catch (PDOException $e) {
-    echo "<p class='text-center'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
-}
-?>
+                        } else {
+                            // If no classes exist, display a message
+                            echo "<h1 class='text-center'>No classes available</h1>";
+                        }
+                    } catch (PDOException $e) {
+                        echo "<p class='text-center'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
+                    }
+                    ?>
 
                 </div>
 
@@ -590,7 +590,7 @@ try {
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="teacher" class="form-label">Select Teacher: </label>
+                                <label for="teacher" class="form-label">Select Teachers: </label>
                                 <select class="form-select" name="teacher">
 
                                     <?php
@@ -601,7 +601,7 @@ try {
 
                                         while ($teacher = $stmt->fetch(PDO::FETCH_ASSOC)) {
 
-                                            echo '<option value=' . $teacher["id"] . '>' . $teacher["fullName"] . '</option>';
+                                            echo '<option value=' . $teacher["fullName"] . '>' . $teacher["fullName"] . '</option>';
                                         }
                                     } else {
                                         echo '<option>There is no staff added yet!</option>';
@@ -816,36 +816,54 @@ try {
                     <div class="mb-3">
                         <label for="class" class="form-label">Select Class:</label>
                         <select class="form-select" name="class" required>
-                            <option value="" selected>Select a class</option>
-                            <option value="BSIT-1A">BSIT-1A</option>
-                            <option value="BSIT-1B">BSIT-1B</option>
-                            <option value="BSIT-2A">BSIT-2A</option>
-                            <option value="BSIT-2B">BSIT-2B</option>
-                            <option value="BSIT-3A">BSIT-3A</option>
-                            <option value="BSIT-3B">BSIT-3B</option>
-                            <option value="BSIT-4A">BSIT-4A</option>
-                            <option value="BSIT-4B">BSIT-4B</option>
-
-                            <option value="BSCS-1A">BSCS-1A</option>
-                            <option value="BSCS-1B">BSCS-1B</option>
-                            <option value="BSCS-2A">BSCS-2A</option>
-                            <option value="BSCS-2B">BSCS-2B</option>
-                            <option value="BSCS-3A">BSCS-3A</option>
-                            <option value="BSCS-3B">BSCS-3B</option>
-                            <option value="BSCS-4A">BSCS-4A</option>
-                            <option value="BSCS-4B">BSCS-4B</option>
+                            <option selected disabled>Select a class</option>
+                            <optgroup label="Department of Information Technology">
+                                <option value="BSIT-1A">BSIT - 1A</option>
+                                <option value="BSIT-1B">BSIT - 1B</option>
+                                <option value="BSIT-2A">BSIT - 2A</option>
+                                <option value="BSIT-2B">BSIT - 2B</option>
+                                <option value="BSIT-3A">BSIT - 3A</option>
+                                <option value="BSIT-3B">BSIT - 3B</option>
+                                <option value="BSIT-4A">BSIT - 4A</option>
+                                <option value="BSIT-4B">BSIT - 4B</option>
+                            </optgroup>
+                            <optgroup label="Department of Computer Science">
+                                <option value="BSCS-1A">BSCS - 1A</option>
+                                <option value="BSCS-1B">BSCS - 1B</option>
+                                <option value="BSCS-2A">BSCS - 2A</option>
+                                <option value="BSCS-2B">BSCS - 2B</option>
+                                <option value="BSCS-3A">BSCS - 3A</option>
+                                <option value="BSCS-3B">BSCS - 3B</option>
+                                <option value="BSCS-4A">BSCS - 4A</option>
+                                <option value="BSCS-4B">BSCS - 4B</option>
+                            </optgroup>
                         </select>
                     </div>
                     <div class="mb-3">
-                        <label for="subjectName" class="form-label">Select Subject Name:</label>
-                        <select class="form-select" name="subjectName" required>
-                            <option value="" selected>Select a subject</option>
-                            <option value="SYSTEMS ADMINISTRATION AND MAINTENANCE">Systems Administration and Maintenance</option>
-                            <option value="CAPSTONE PROJECT AND RESEARCH 1">Capstone Project and Research I</option>
-                            <option value="CAPSTONE PROJECT AND RESEARCH 2">Capstone Project and Research 2</option>
-                            <option value="INFORMATION ASSURANCE AND SECURITY 1">Information Assurance and Security 1</option>
-                            <option value="INFORMATION ASSURANCE AND SECURITY 2">Information Assurance and Security 2</option>
+                        <label for="subjectName" class="form-label">Select Subject Name: </label>
+                        <?php
+                        try {
+                            $stmt = $pdo->prepare("SELECT id, name, semester FROM subjects ORDER BY name ASC");
+                            $stmt->execute();
+                            $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        } catch (PDOException $e) {
+                            echo "Error: " . $e->getMessage();
+                        }
+                        ?>
+
+                        <select class="form-select" name="subjectName">
+                            <?php if (!empty($subjects)): ?>
+                                <option value="" selected>Select a subject</option>
+                                <?php foreach ($subjects as $row): ?>
+                                    <option value="<?php echo htmlspecialchars($row['name']); ?>">
+                                        <?php echo htmlspecialchars($row['name']) . ' (' . htmlspecialchars($row['semester']) . ')'; ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <option value="" selected>No subjects added yet</option>
+                            <?php endif; ?>
                         </select>
+
                     </div>
                     <div class="mb-3">
                         <label for="teacher" class="form-label">Select Teacher: </label>
@@ -857,7 +875,8 @@ try {
                             if ($stmt->rowCount() > 0) {
                                 echo '<option selected>Select teacher below</option>';
                                 while ($teacher = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                    echo '<option value=' . $teacher["id"] . '>' . $teacher["fullName"] . '</option>';
+                                    echo '<option value="' . htmlspecialchars($teacher["fullName"], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($teacher["fullName"], ENT_QUOTES, 'UTF-8') . '</option>';
+
                                 }
                             } else {
                                 echo '<option>There is no staff added yet!</option>';
@@ -870,9 +889,22 @@ try {
                     <div class="mb-3">
                         <label for="semester" class="form-label">Select Semester:</label>
                         <select class="form-select" name="semester" required>
-                            <option value="" selected>Select a semester</option>
-                            <option value="First Semester">First Semester</option>
-                            <option value="Second Semester">Second Semester</option>
+                            <?php
+                            $sql = "SELECT name FROM semester ORDER BY name ASC";
+                            $stmt = $pdo->query($sql);
+                            $semesters = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            ?>
+
+                            <?php if (!empty($semesters)): ?>
+                                <?php foreach ($semesters as $semester): ?>
+                                    <option value="<?php echo htmlspecialchars($semester['name']); ?>">
+                                        <?php echo htmlspecialchars($semester['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <option value="">No semesters available</option>
+                            <?php endif; ?>
+
                         </select>
                     </div>
                     <div class="mb-3">
@@ -1011,3 +1043,9 @@ try {
 
 
 </html>
+
+<?php 
+
+include('processes/server/alerts.php');
+
+?>

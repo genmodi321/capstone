@@ -293,3 +293,36 @@ input[type=number] {
     border: 1px solid white;
     color: white !important;
 }
+
+
+.sidebar-container {
+    background-color: #415D43;
+    transition: width 0.3s ease;
+    width: 250px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    justify-content: center;
+    top: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+
+  .sidebar-container.collapsed {
+    width: 0;
+  }
+
+  .sidebar-content {
+    padding: 15px;
+  }
+
+  .sidebar-container.collapsed .sidebar-content {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+
+  .sidebar-container .sidebar-content {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }

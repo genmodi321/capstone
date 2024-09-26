@@ -18,7 +18,8 @@ if (isset($_GET['id'])) {
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
-            $_SESSION['STATUS'] = "STAFF_EMAIL_REGISTERED";
+            $_SESSION['STATUS'] = "STAFF_EMAIL_EXISTS";
+            header('Location: ../../../staff_management.php');
             exit();
         }
 
@@ -56,7 +57,8 @@ if (isset($_GET['id'])) {
             exit();
         }
     } catch (PDOException $e) {
-        echo "Error: " . $e->getMessage();
+        $_SESSION['STATUS'] = "STAFF_ACCOUNT_FAIL_UPDATE";
+        header('Location: ../../../staff_management.php');
     }
 } else {
     $_SESSION['STATUS'] = "STAFF_ACCOUNT_FAIL_UPDATE";

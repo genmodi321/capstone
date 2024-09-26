@@ -1,49 +1,63 @@
 <?php
-include('../../server/conn.php');
 session_start();
-date_default_timezone_set('Asia/Manila');
+require_once '../../server/conn.php';
 
-try {
-    // Create a new PDO instance
-    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-    // Set the PDO error mode to exception
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+// Check if the form was submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Retrieve form data
+    $lastName = $_POST['last_name'];
+    $firstName = $_POST['first_name'];
+    $middleName = $_POST['middle_name'];
+    $email = $_POST['email'];
+    $phoneNumber = $_POST['phone_number'];
+    $password = $_POST['password'];
+    $gender = $_POST['gender'];
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Get form data and sanitize it
-        $email = htmlspecialchars($_POST['email']);
-        $first_name = htmlspecialchars($_POST['first_name']);
-        $middle_name = htmlspecialchars($_POST['middle_name']);
-        $last_name = htmlspecialchars($_POST['last_name']);
-        $full_name = $first_name . " " . $middle_name . " " . $last_name;
-        $phone_number = htmlspecialchars($_POST['phone_number']);
-        $gender = htmlspecialchars($_POST['gender']);
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+    // Create full name by combining first, middle, and last names
+    $fullName = trim("$firstName $middleName $lastName");
 
-        // Prepare an SQL statement to insert the data
-        $sql = "INSERT INTO admin ( email, password, fullName, phone_number, gender) 
-                VALUES (:email, :password, :fullName, :phone_number, gender)";
+    // Hash the password for security
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        // Prepare the statement
-        $stmt = $pdo->prepare($sql);
+    // Check if the account already exists
+    $checkSql = "SELECT * FROM staff_accounts WHERE email = :email";
+    $checkStmt = $pdo->prepare($checkSql);
+    $checkStmt->bindParam(':email', $email);
+    $checkStmt->execute();
 
-        // Bind parameters to the statement
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $password);
-        $stmt->bindParam(':first_name', $first_name);
-        $stmt->bindParam(':middle_name', $middle_name);
-        $stmt->bindParam(':last_name', $last_name);
-        $stmt->bindParam(':phone_number', $phone_number);
-        $stmt->bindParam(':gender', $gender);
+    if ($checkStmt->rowCount() > 0) {
+        $_SESSION['STATUS'] = "STAFF_ACCOUNT_EXISTS";
+        header('Location: ../../teacher_login_page.php');
+    } else {
+        // Prepare the SQL statement for inserting the new account
+        $sql = "INSERT INTO staff_accounts (fullName, email, password, department, class, date_created, phone_number, gender) 
+                VALUES (:fullName, :email, :password, NULL, NULL, NOW(), :phoneNumber, :gender)";
 
-        // Execute the statement
-        if ($stmt->execute()) {
-            $_SESSION['STATUS'] = "ACCOUNT_C_SUCCESFUL";
-            header('Location: ../../../admin_login_page.php');
-        } else {
-            echo "There was an error creating the account.";
+        try {
+            // Prepare and execute the insert statement
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindParam(':fullName', $fullName);
+            $stmt->bindParam(':email', $email);
+            $stmt->bindParam(':password', $hashedPassword);
+            $stmt->bindParam(':phoneNumber', $phoneNumber);
+            $stmt->bindParam(':gender', $gender);
+
+            // Execute the statement
+            if ($stmt->execute()) {
+                $_SESSION['STATUS'] = "STAFF_CREATE_ACC_SUCCESFUL";
+                header('Location: ../../../teacher_login_page.php'); 
+                exit();
+            } else {
+                // Handle failure
+                $_SESSION['STATUS'] = "STAFF_CREATE_ACC_ERROR";
+        header('Location: ../../../teacher_login_page.php');
+        exit();
+            }
+        } catch (PDOException $e) {
+            $_SESSION['STATUS'] = "STAFF_CREATE_ACC_ERROR";
+            header('Location: ../../../teacher_login_page.php');
+            exit();
         }
+
     }
-} catch (PDOException $e) {
-    echo "Connection failed: " . $e->getMessage();
 }

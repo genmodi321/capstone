@@ -1,3 +1,12 @@
+<?php
+session_start();
+include('processes/server/header.php');
+include('processes/server/conn.php');
+if (!isset($_SESSION['teacher_id'])) {
+  $_SESSION['STATUS'] = "TEACHER_NOT_LOGGED_IN";
+  header("Location: teacher_login_page.php");
+}
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -33,33 +42,38 @@
     <div class="container-fluid whole-container">
       <div class="row">
 
-        <div class="col-md-2 sidebar text-center">
-          <small id="currentTime"> </small>
+      <div class=" sidebar-container text-center" id="sidebarContainer">
+        <div class="sidebar-content text-center">
+          <small class="c-white" id="currentTime"> </small>
 
           <img src="external/img/ccs_logo-removebg-preview.png"
             class="img-fluid logo space-sm">
-          <h4 class="bold">Welcome, Jason!</h4>
+          <h4 class="c-white bold">Welcome, Teacher!</h4>
 
           <div class="navigation-links" style="text-align: left;">
-            <span><i class="bi bi-house"></i> Home</span>
-            <a href="teacher_dashboard.html"><p><i class="bi bi-kanban"></i> Index</p></a>
+            <a href="teacher_dashboard.php">
+              <p><i class="bi bi-kanban"></i> Home</p>
+            </a>
             <hr>
-            <span><i class="bi bi-menu-button-wide"></i>
-              Management</span>
-            <a href="teacher_class_dashboard.html"><p><i
+            <a href="teacher_class_dashboard.php">
+              <p><i
                   class="bi bi-book"></i> Classes
-                </p></a>
-            <a href="teacher_subject_dashboard.html"><p><i
+              </p>
+            </a>
+            <a href="teacher_subject_dashboard.php">
+              <p><i
                   class="bi bi-journals"></i> Subjects
-                </p></a>
+              </p>
+            </a>
             <hr>
             <p><i class="bi bi-calendar-event"></i>
-                Class
-                Management</p>
-    
-         
+              Class
+              Management</p>
+
+
           </div>
         </div>
+      </div>
 
         <div class="col">
 
@@ -111,7 +125,7 @@
                     </span>
 
                   </a>
-                  <a href="index.html"a class="nav-link-span">
+                  <a href="processes/teachers/account/logout.php"a class="nav-link-span">
                     <button class="btn btn-csms-outline">Logout</button></a>
 
                 </span>
@@ -146,7 +160,7 @@
 
               <hr>
               <div class="container">
-                <a href="teacher_subject_management.html" class="nav-ham-link"><h5><i class="bi bi-arrow-left"></i> Back</h5></a>
+                <a href="teacher_subject_management_activity_dashboard.php?id=<?php echo $_GET['id']?>" class="nav-ham-link"><h5><i class="bi bi-arrow-left"></i> Back</h5></a>
               </div>
 
               <div class="container">
@@ -154,21 +168,21 @@
 
                   <div class="row">
                     <div class="col-md-6">
+                    <form id="uploadForm"  enctype="multipart/form-data" method="POST" action="processes/teachers/assessments/add.php?id=<?php echo $_GET['id']?>">
                       <label>Title:</label> <input type="text" name="title"
                         class="input-form" placeholder="Insert a Title">
                       <textarea rows="15" class="textarea"
-                        placeholder="Write a description for the activity"
+                        placeholder="Write a description for particular activity"
                         name="description"></textarea>
                       <br>
-                      <form id="uploadForm">
+                    
                         <label for="fileInput" class="attachment-icon">
                           <i class="bi bi-paperclip"></i>
                           <span id="attachment">Add an Attachment: </span>
                         </label>
 
-                        <input type="file" id="fileInput" multiple name>
+                        <input type="file" id="fileInput" multiple name="fileInput" accept=".jpg, .jpeg, .png, .pdf, .docx, .xlsx, .mp4, .mpeg">
                         <ul id="fileList"></ul>
-
                       </div>
 
                       <div class="col">
@@ -183,6 +197,14 @@
 
                         <label>Passing Points: </label> <br>
                         <input class="input-form" type="number" minlength="1" name="passingPoints" value=1> <br> <br>
+
+                        
+                        <label>Activity: </label> <br>
+                        <select class="input-form" name="assessment_type">
+                          <option value="Quiz">Quiz</option>
+                          <option value="Activity">Activity</option>
+                          <option value="Project">Project</option>
+                        </select>  <br> <br>
 
                       </div>
                       
@@ -795,5 +817,9 @@ const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstra
             updateFileList();
         }
 </script>
+
+<?php 
+include('processes/server/alerts.php');
+?>
 
 </html>

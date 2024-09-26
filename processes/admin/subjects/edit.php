@@ -9,6 +9,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $teacher = $_POST['teacher'];
 
     try {
+
+        $checkSubjectStmt = $pdo->prepare("SELECT * FROM subjects WHERE name = :name OR code = :code");
+        $checkSubjectStmt->bindParam(':name', $name);
+        $checkSubjectStmt->bindParam(':code', $code);
+        $checkSubjectStmt->execute();
+
+        if ($checkSubjectStmt->rowCount() > 0) {
+            // Subject already exists
+            $_SESSION['STATUS'] = "ADMIN_SUBJECT_EXISTS";
+            header('Location: ../../../subject_management.php');
+            exit;
+        }
+
+        
         $sql = "UPDATE subjects SET name = :name, code = :code, class = :class, teacher = :teacher WHERE id = :id";
         $stmt = $pdo->prepare($sql);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);

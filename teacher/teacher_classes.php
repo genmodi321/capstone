@@ -53,7 +53,7 @@
                   class="bi bi-journals"></i> Subjects
                 </p></a>
             <hr>
-            <a href="index.html"a class="nav-link-span">
+            <a href="processes/teachers/account/logout.php"a class="nav-link-span">
               <button class="btn btn-csms-outline">Logout</button></a>
     
          

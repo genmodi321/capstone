@@ -1,6 +1,6 @@
 <?php
 require '../../server/conn.php'; 
-
+session_start();
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $id = $_POST['id'];
@@ -16,6 +16,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "All fields are required.";
         exit;
     }
+
+    
 
     try {
         $stmt = $pdo->prepare("UPDATE classes SET name = :class, subject = :subjectName, teacher = :teacher, semester = :semester, description = :description WHERE id = :id");

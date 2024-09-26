@@ -560,7 +560,7 @@ $subjectDataJSON = json_encode($subjectData);
                                     echo '<option value="' . htmlspecialchars($teacher["fullName"]) . '">' . htmlspecialchars($teacher["fullName"]) . '</option>';
                                 }
                             } else {
-                                echo '<option>There is no staff added yet!</option>';
+                                echo '<option disabled>There is no staff added yet!</option>';
                             }
                             ?>
                         </select>
@@ -740,8 +740,16 @@ foreach ($subjects as $subject) {
                         <div class="mb-3">
                             <label for="editSemester<?php echo $subject['id']; ?>" class="form-label">Select Semester</label>
                             <select class="form-select" id="editSemester<?php echo $subject['id']; ?>" name="semester">
-                                <option value="First Semester" <?php echo $subject['semester'] === 'First Semester' ? 'selected' : ''; ?>>First Semester</option>
-                                <option value="Second Semester" <?php echo $subject['semester'] === 'Second Semester' ? 'selected' : ''; ?>>Second Semester</option>
+                            <?php if (!empty($semesters)): ?>
+                                <?php foreach ($semesters as $semester): ?>
+                                    <option value="<?php echo htmlspecialchars($semester['name']); ?>">
+                                        <?php echo htmlspecialchars($semester['name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <option value="">No semesters available</option>
+                            <?php endif; ?>
+
                             </select>
                         </div>
                 </div>

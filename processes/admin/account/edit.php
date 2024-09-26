@@ -10,6 +10,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = htmlspecialchars(trim($_POST['email']));
     $gender = htmlspecialchars(trim($_POST['gender']));
 
+    $sql = "SELECT * FROM admin WHERE username = :username OR email = :email";
+    $stmt = $pdo->prepare($sql);
+    $stmt->bindParam(':username', $username);
+    $stmt->bindParam(':email', $email);
+    $stmt->execute();
+    
+    // Fetch results
+    if ($stmt->rowCount() > 0) {
+        // If there's a duplicate
+        $_SESSION['STATUS'] = "DUPLICATE_ACCOUNT";
+        header('Location: ../../../admin_management.php');
+        exit;
+    }
+
+
     try {
         $sql = "UPDATE admin 
                 SET first_name = :first_name, 
