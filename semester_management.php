@@ -249,6 +249,12 @@ include('processes/server/conn.php');
                             echo "<td>" . htmlspecialchars($semester['end_date']) . "</td>";
                             echo "<td>" . htmlspecialchars($semester['description']) . "</td>";
                             echo "<td>
+                               <button type='button' class='btn btn-primary'>
+                    <i class='bi bi-box'></i> Archive
+                </button>
+                   <button type='button' data-bs-toggle='modal' data-bs-target='#viewModal' class='btn btn-success'>
+                    <i class='bi bi-eye'></i> View
+                </button>
                 <button type='button' data-bs-toggle='modal' data-bs-target='#editModal{$semester['id']}' class='btn btn-warning'>
                     <i class='bi bi-pencil'></i> Edit
                 </button>
@@ -684,6 +690,43 @@ foreach ($semesters as $semester) { ?>
 <?php
 }
 ?>
+
+<div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Viewing Archived Semester</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        <h5> Archived Semester Details</h5>
+        <p>1st Semester (2024 - 2025)</p>
+            <div class="col">
+            <h5>Semester Information</h5>
+            <p><b>Name:</b> 1st Semester  </p>
+            <p><b>Start Date:</b> 10/13/2024  </p>
+            <p><b>End Date:</b> 10/15/2024  </p>
+            <p><b>Description:</b> 1st Semester  </p>
+            <p><b>Archived Date:</b> 10/16/2024  </p>
+            <p><b>Reason for Archiving:</b> End of Semester </p>
+            </div>
+            <div class="col">
+            <h5>Classes Information</h5>
+            </div>
+        </div>
+     
+ 
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
     document.getElementById('toggleButton').addEventListener('click', function() {
         document.getElementById('sidebarContainer').classList.toggle('collapsed');

@@ -1,3 +1,6 @@
+<?php 
+include('processes/server/alert_system.php');
+?>
 <!doctype html>
 <html lang="en">
     <head>

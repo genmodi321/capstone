@@ -39,6 +39,21 @@ include('processes/server/conn.php');
     <link rel="stylesheet"
         href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 
+
+
+ 
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- DataTables JS -->
+    <script
+        src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+    <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+
     <script
         src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
@@ -47,13 +62,6 @@ include('processes/server/conn.php');
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js"
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy"
         crossorigin="anonymous"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- DataTables JS -->
-    <script
-        src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
 </head>
 
@@ -65,11 +73,16 @@ include('processes/server/conn.php');
     td {
         text-align: center;
         vertical-align: middle;
+        border-bottom: 1px solid black;
     }
 
     .btn-csms {
         background-color: #709775;
         color: white;
+    }
+
+    .btn-csms:hover {
+        border: 1px solid #709775;
     }
 </style>
 
@@ -77,102 +90,12 @@ include('processes/server/conn.php');
     <div class="container-fluid whole-container">
         <div class="row">
             <!-- Sidebar container with transition -->
-            <div class="sidebar-container" id="sidebarContainer">
-                <div class="sidebar-content text-center">
-                    <small class="c-white" id="currentTime"> </small>
-
-                    <img src="external/img/ccs_logo-removebg-preview.png" class="img-fluid logo space-sm">
-                    <h4 class="bold c-white ">Welcome, Admin!</h4>
-
-                    <div class="navigation-links" style="text-align: left;">
-                        <span><i class="bi bi-house"></i> Home</span>
-                        <a href="dashboard.php">
-                            <p><i class="bi bi-kanban"></i> Index</p>
-                        </a>
-                        <hr>
-                        <span><i class="bi bi-menu-button-wide"></i> Management</span>
-                        <a href="class_management.php">
-                            <p><i class="bi bi-book"></i> Class Management</p>
-                        </a>
-                        <a href="staff_management.php">
-                            <p><i class="bi bi-person-square"></i> Teacher Management</p>
-                        </a>
-                        <a href="subject_management.php">
-                            <p><i class="bi bi-journals"></i> Subject Management</p>
-                        </a>
-                        <a href="semester_management.php">
-                            <p><i class="bi bi-calendar-event"></i> Semester Management</p>
-                        </a>
-                        <hr>
-                        <a href="admin_management.php">
-                            <p><i class="bi bi-file-person-fill"></i> Admin User</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <?php include('processes/server/sidebar.php'); ?>
 
 
-            <div class="col">
+            <div class="col-md-9 col-lg-10 content">
 
-                <div
-                    class="container-fluid d-flex navbar navbar-expand-lg">
-                    <a class="navbar-brand" href="#" type="button" id="toggleButton">
-                        <img
-                            src="external/img/ccs_logo-removebg-preview.png"
-                            class="img-fluid small-logo">
-                    </a>
-                    <div class="mx-auto c-white">
-                        Comprehensive Student Management System
-                    </div>
-                    <button class="navbar-toggler" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse"
-                        id="navbarSupportedContent">
-                        <div class="ms-auto">
-                            <span class="ms-auto">
-                                <a href
-                                    class="nav-link-spand position-relative "
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#messageModal">
-
-                                    <i
-                                        class="bi bi-chat-dots iconics"></i>
-                                    <span
-                                        class="position-absolute 
-                                            top-0 start-50 translate-middle p-2 
-                                            bg-danger border border-light rounded-circle">
-
-                                    </span>
-                                </a>
-                                <a
-                                    class="nav-link-span position-relative"><i
-                                        class="bi bi-bell iconics"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#notificationModal"></i>
-
-                                    <span
-                                        class="position-absolute 
-                                            top-0 start-50 translate-middle p-2 
-                                            bg-danger border border-light rounded-circle">
-
-                                    </span>
-
-                                </a>
-                                <a href="processes/admin/account/logout.php " class="nav-link-span" style="color: white !important; border: 1px solid white;
-                border-radius: 20px; padding: 5px;"> Logout</a>
-
-                            </span>
-
-                        </div>
-                    </div>
-                </div>
-
+                <?php include('processes/server/header.php'); ?>
                 <div class="container-fluid actual-content">
                     <div class="container-fluid wd-100">
                         <div class="welcome-container">
@@ -187,7 +110,7 @@ include('processes/server/conn.php');
                                         lives.</p>
 
                                     <p class="fs-small mt-10"> <a
-                                            href="dashboard.html"
+                                            href="dashboard.php"
                                             class="nav-ham-link">Home</a> /
                                         Class Management</p>
                                 </h3>
@@ -250,7 +173,7 @@ include('processes/server/conn.php');
                                         $currentSemester = $stmt->fetchColumn();
                                         echo $currentSemester;
                                         if (isset($selectedClass) && isset($currentSemester)) {
-                                            // Database query to get subjects based on class and semester
+
                                             $sql = "SELECT * FROM subjects WHERE class = :class";
                                             $stmt = $pdo->prepare($sql);
                                             $stmt->execute([
@@ -259,11 +182,11 @@ include('processes/server/conn.php');
 
                                             $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                                            // Check if there are any subjects for the selected class and semester
+
                                             if (empty($subjects)) {
                                                 echo "<option value='' disabled>No subjects available for this class and semester</option>";
                                             } else {
-                                                // Loop through the subjects and populate the dropdown
+
                                                 foreach ($subjects as $subject) {
                                                     echo "<option value='" . htmlspecialchars($subject['id']) . "'>" . htmlspecialchars($subject['name']) . " (" . htmlspecialchars($subject['code']) . ")</option>";
                                                 }
@@ -293,20 +216,17 @@ include('processes/server/conn.php');
                             </div>
 
                             <script>
-                                // Handle subject selection and adding to the assigned list
                                 document.getElementById('subject-select').addEventListener('change', function() {
                                     const selectedSubjectId = this.value;
                                     const selectedSubjectText = this.options[this.selectedIndex].text;
 
                                     const assignedSubjectsContainer = document.getElementById('assigned-subjects-container');
 
-                                    // Check if the subject is already in the assigned list
                                     if (document.getElementById(`assigned-subject-${selectedSubjectId}`)) {
                                         alert("Subject already assigned!");
                                         return;
                                     }
 
-                                    // Create a new row for the assigned subject
                                     const newSubjectRow = document.createElement('div');
                                     newSubjectRow.classList.add('row');
                                     newSubjectRow.setAttribute('id', `assigned-subject-${selectedSubjectId}`);
@@ -317,38 +237,26 @@ include('processes/server/conn.php');
             <button class="btn btn-danger btn-sm" onclick="removeAssignedSubject(${selectedSubjectId})">Remove</button>
         </div>
     `;
-
-                                    // Append the new subject row to the container
                                     assignedSubjectsContainer.appendChild(newSubjectRow);
-
-                                    // Show the "Update Class" button if there are subjects in the assigned list
                                     document.getElementById('update-class-btn').style.display = 'block';
                                 });
 
-                                // Function to remove a subject from the assigned list
                                 function removeAssignedSubject(subjectId) {
                                     const subjectRow = document.getElementById(`assigned-subject-${subjectId}`);
                                     subjectRow.remove();
-
-                                    // If no subjects remain, hide the "Update Class" button
                                     const assignedSubjectsContainer = document.getElementById('assigned-subjects-container');
                                     if (assignedSubjectsContainer.children.length === 0) {
                                         document.getElementById('update-class-btn').style.display = 'none';
                                     }
                                 }
 
-                                // Function to handle updating the assigned class
                                 function updateAssignedClass() {
                                     const assignedSubjectsContainer = document.getElementById('assigned-subjects-container');
                                     const assignedSubjects = [];
-
-                                    // Loop through the assigned subjects and gather their IDs
                                     assignedSubjectsContainer.querySelectorAll('.row').forEach(row => {
                                         const subjectId = row.getAttribute('id').replace('assigned-subject-', '');
                                         assignedSubjects.push(subjectId);
                                     });
-
-                                    // Make an AJAX request to update the class and assigned subjects on the server
                                     fetch('update_assigned_subjects.php', {
                                             method: 'POST',
                                             headers: {
@@ -372,10 +280,9 @@ include('processes/server/conn.php');
 
                                 document.getElementById('class-select').addEventListener('change', function() {
                                     const selectedClass = this.value;
-                                    const selectedSemester = document.getElementById('semester-select').value; // Assuming you have a semester dropdown
+                                    const selectedSemester = document.getElementById('semester-select').value;
 
                                     if (selectedClass && selectedSemester) {
-                                        // Send AJAX request to fetch subjects based on class and semester
                                         fetch('get_subjects.php', {
                                                 method: 'POST',
                                                 headers: {
@@ -398,20 +305,25 @@ include('processes/server/conn.php');
 
                     <br>
                     <?php
-                    require 'processes/server/conn.php'; // Include the database connection
+                    require 'processes/server/conn.php';
 
-                    // Fetch classes from the database
+
                     try {
-                        $stmt = $pdo->query("SELECT id, name, subject, teacher, semester, studentTotal FROM classes ORDER BY name ASC");
+                        $stmt = $pdo->query("SELECT * FROM classes ORDER BY CASE status 
+        WHEN 'pending' THEN 1
+        WHEN 'accepted' THEN 2
+        WHEN 'rejected' THEN 3
+        ELSE 4 END");
 
                         if ($stmt->rowCount() > 0) {
-                            // Only display the table if there are classes
+
                     ?>
-                            <table id="classes">
+                            <table id="classes" style="width: 100%;">
                                 <thead>
                                     <tr>
                                         <th>Class Name</th>
-                                        <th>Subject Name</th>
+
+                                        <th>Subject</th>
                                         <th>Teacher</th>
                                         <th>Semester</th>
                                         <th>No. of Students</th>
@@ -421,7 +333,8 @@ include('processes/server/conn.php');
                                 <tfoot>
                                     <tr>
                                         <th>Class Name</th>
-                                        <th>Subject Name</th>
+
+                                        <th>Subject</th>
                                         <th>Teacher</th>
                                         <th>Semester</th>
                                         <th>No. of Students</th>
@@ -430,9 +343,8 @@ include('processes/server/conn.php');
                                 </tfoot>
                                 <tbody>
                                     <?php
-                                    // If classes exist, fetch and display them
                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                                        // Fetch the teacher's name based on the teacher's ID
+                                        // Fetch teacher's full name
                                         $teacherStmt = $pdo->prepare("SELECT fullName FROM staff_accounts WHERE id = :id");
                                         $teacherStmt->bindParam(':id', $row['teacher'], PDO::PARAM_INT);
                                         $teacherStmt->execute();
@@ -440,54 +352,60 @@ include('processes/server/conn.php');
                                     ?>
                                         <tr>
                                             <td><?php echo htmlspecialchars($row['name']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['subject']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['teacher']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['semester']); ?></td>
-                                            <td><?php echo htmlspecialchars($row['studentTotal']); ?></td>
                                             <td>
-                                                <button type='button' class='btn btn-success' data-bs-toggle='modal' data-bs-target='#viewModal<?php echo $row['id']; ?>'>
-                                                    <i class='bi bi-eye'></i> View
-                                                </button>
-                                                <button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal<?php echo $row['id']; ?>'>
-                                                    <i class='bi bi-pencil'></i> Edit
-                                                </button>
-                                                <button type="button" class="btn btn-danger" onclick="confirmDelete(<?php echo $row['id']; ?>)">
-                                                    <i class="bi bi-trash"></i> Delete
-                                                </button>
+                                                <span class="alert alert-primary" style="padding:2px"><?php echo htmlspecialchars($row['type']); ?></span> <br>
+                                                <?php echo htmlspecialchars($row['code']); ?> <br>
+
+
+                                                <?php echo htmlspecialchars($row['subject']); ?>
+                                            </td>
+                                            <td><?php echo htmlspecialchars($row['teacher']); ?></td> <!-- Use full name from fetched data -->
+                                            <td><?php echo htmlspecialchars($row['semester']); ?></td>
+                                            <td><a href="#" style="color:black !important" data-bs-toggle="modal" data-bs-target="#studentModal">
+                                                    <?php echo htmlspecialchars($row['studentTotal']); ?>
+                                                </a></td>
+                                            <td>
+                                                <?php if ($row['status'] == 'pending'): ?>
+                                                    <span>This class is still pending for approval:</span><br><br>
+                                                    <button class='btn btn-success'> <small><i class='bi bi-check2-square'></i> Approve</small></button>
+                                                    <button class='btn btn-danger'> <small><i class='bi bi-x-circle-fill'></i> Disapprove</small></button>
+                                                <?php else: ?>
+                                                    <button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#viewModal<?php echo $row['id']; ?>'>
+                                                        <i class='bi bi-eye'></i> View
+                                                    </button>
+                                                    <button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal<?php echo $row['id']; ?>'>
+                                                        <i class='bi bi-pencil'></i> Edit
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger" onclick="confirmDelete(<?php echo $row['id']; ?>)">
+                                                        <i class="bi bi-trash"></i> Delete
+                                                    </button>
+                                                <?php endif; ?>
                                             </td>
                                         </tr>
-                                    <?php
-                                    }
-                                    ?>
+                                    <?php } ?>
                                 </tbody>
                             </table>
+
                     <?php
                         } else {
-                            // If no classes exist, display a message
                             echo "<h1 class='text-center'>No classes available</h1>";
                         }
                     } catch (PDOException $e) {
                         echo "<p class='text-center'>Error: " . htmlspecialchars($e->getMessage()) . "</p>";
                     }
                     ?>
-
                 </div>
-
             </div>
-
         </div>
     </div>
-
 </body>
 <?php
-require 'processes/server/conn.php'; // Include the database connection
-
-// Fetch classes from the database
 try {
-    $stmt = $pdo->query("SELECT * FROM classes ORDER BY name ASC");
+    $stmt = $pdo->query("SELECT * FROM classes");
+    $staffStmt = $pdo->query("SELECT * FROM staff_accounts");
+    $staffList = $staffStmt->fetchAll(PDO::FETCH_ASSOC);
 
     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        // Generate the modal for each class
 ?>
         <div class="modal fade" id="viewModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -498,37 +416,41 @@ try {
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
-                            <label class="form-label">Class:</label>
+                            <label class="form-label bold">Class:</label>
                             <p><?php echo htmlspecialchars($row['name']); ?></p>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Subject Name:</label>
-                            <p><?php echo htmlspecialchars($row['subject']); ?></p>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Teacher:</label>
-
+                            <label class="form-label bold">Subject Type:</label>
                             <p>
                                 <?php
-                                require('processes/server/conn.php');
-                                $id = $row['teacher'];
-                                $sql = "SELECT * FROM staff_accounts where id =:id";
-                                $stmt = $pdo->prepare($sql);
-                                $stmt->bindParam(':id', $id);
-                                $stmt->execute();
-                                $staff = $stmt->fetch(PDO::FETCH_ASSOC);
-                                echo $staff['fullName'];
-
+                                echo htmlspecialchars($row['type']);
                                 ?>
                             </p>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Semester:</label>
+                            <label class="form-label bold">Subject Name:</label>
+                            <p><?php echo htmlspecialchars($row['subject']); ?></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label bold">Teacher:</label>
+                            <p>
+                                <?php
+                                echo htmlspecialchars($row['teacher']);
+                                ?>
+                            </p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label bold">Semester:</label>
                             <p><?php echo htmlspecialchars($row['semester']); ?></p>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Class Description:</label>
+                            <label class="form-label bold">Class Description:</label>
                             <p><?php echo htmlspecialchars($row['description']); ?></p>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label bold">Class Code: <button class=" btn btn-primary copy-btn" id="liveToastBtn" style="padding: 3px; font-size: 12px;" onclick="copyText()"><i class="bi bi-clipboard-fill"></i></button> </label>
+                            <p id="text-to-copy"><?php echo htmlspecialchars($row['classCode']); ?></p>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -538,7 +460,7 @@ try {
             </div>
         </div>
 
-
+        <!-- Edit Modal -->
         <div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -550,10 +472,9 @@ try {
                         <form method="POST" action="processes/admin/classes/update.php">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                             <div class="mb-3">
-                                <label for="class" class="form-label">Select Class: </label>
+                                <label for="class" class="form-label bold">Select Class: </label>
                                 <select class="form-select" name="class">
                                     <option value="<?php echo htmlspecialchars($row['name']); ?>" selected><?php echo htmlspecialchars($row['name']); ?></option>
-
                                     <?php
                                     $sections = [
                                         "BSIT-1A",
@@ -573,7 +494,6 @@ try {
                                         "BSCS-4A",
                                         "BSCS-4B"
                                     ];
-
                                     foreach ($sections as $section) {
                                         if ($section !== $row['name']) {
                                             echo '<option value="' . htmlspecialchars($section) . '">' . htmlspecialchars($section) . '</option>';
@@ -583,43 +503,36 @@ try {
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="subjectName" class="form-label">Select Subject Name: </label>
+                                <label for="subjectName" class="form-label bold">Select Subject Name: </label>
                                 <select class="form-select" name="subjectName">
-                                    <option value="<?php echo htmlspecialchars($row['semester']); ?>" selected><?php echo htmlspecialchars($row['subject']); ?></option>
-                                    <!-- Add other options here -->
+                                    <option value="<?php echo htmlspecialchars($row['subject']); ?>" selected><?php echo htmlspecialchars($row['subject']); ?></option>
+
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="teacher" class="form-label">Select Teachers: </label>
+                                <label for="teacher" class="form-label bold">Select Teacher: </label>
                                 <select class="form-select" name="teacher">
-
                                     <?php
-                                    require 'processes/server/conn.php';
-                                    $sql = "SELECT id, fullName FROM staff_accounts";
-                                    $stmt = $pdo->query($sql);
-                                    if ($stmt->rowCount() > 0) {
+                                    foreach ($staffList as $staff) {
+                                        // Check if the current teacher's fullName matches the selected teacher
+                                        $selected = ($staff['fullName'] === $row['teacher']) ? 'selected' : '';
 
-                                        while ($teacher = $stmt->fetch(PDO::FETCH_ASSOC)) {
-
-                                            echo '<option value=' . $teacher["fullName"] . '>' . $teacher["fullName"] . '</option>';
-                                        }
-                                    } else {
-                                        echo '<option>There is no staff added yet!</option>';
+                                        // Output the option with the 'selected' attribute if it's the current teacher
+                                        echo '<option value="' . htmlspecialchars($staff['fullName']) . '" ' . $selected . '>' . htmlspecialchars($staff['fullName']) . '</option>';
                                     }
                                     ?>
 
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="semester" class="form-label bold">Select Semester: </label>
+                                <select class="form-select" name="semester">
+                                    <option value="<?php echo htmlspecialchars($row['semester']); ?>" selected><?php echo htmlspecialchars($row['semester']); ?></option>
 
                                 </select>
                             </div>
                             <div class="mb-3">
-                                <label for="semester" class="form-label">Select Semester: </label>
-                                <select class="form-select" name="semester">
-                                    <option value="<?php echo htmlspecialchars($row['semester']); ?>" selected><?php echo htmlspecialchars($row['semester']); ?></option>
-                                    <!-- Add other options here -->
-                                </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="classDesc" class="form-label">Class Description</label>
+                                <label for="classDesc" class="form-label bold">Class Description</label>
                                 <textarea class="form-control" id="classDesc" name="classDesc"><?php echo htmlspecialchars($row['description']); ?></textarea>
                             </div>
                     </div>
@@ -638,167 +551,38 @@ try {
 }
 ?>
 
-
-
-<div class="modal fade" id="notificationModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+<!-- Student Modal -->
+<div class="modal fade" id="studentModal" tabindex="-1" aria-labelledby="studentModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5"
-                    id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save
-                    changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="messageModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Chats</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <div class="row msg align-items-center" data-bs-target="#actualMessageModal" data-bs-toggle="modal">
-                    <div class="col-sm-3 text-center" style="border-right: 1px solid black;">
-                        <h1><i class="bi bi-person-fill"></i></h1>
-                        <span>Jason Catadman</span>
-                    </div>
-                    <div class="col">
-                        <p><em>You: Sure sir Catadman. I will work on that right now.</em></p>
-                    </div>
-                </div>
-
-                <br>
-
-                <div class="row unread msg align-items-center">
-                    <div class="col-sm-3 text-center" style="border-right: 1px solid black;">
-                        <h1><i class="bi bi-person-fill"></i></h1>
-                        <span>Ceed Lorenzo</span>
-                    </div>
-                    <div class="col">
-                        <p><em>Lorenzo: Good afternoon sir, ask ko lang if available po si...</em></p>
-                    </div>
-                </div>
-
-
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="actualMessageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Chats</h1>
+                <h5 class="modal-title" id="studentModalLabel">Students in Class</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="chatBody">
-                <div class="time text-center grey">
-                    2:09 PM - 8/11/2024
-                </div>
-                <br>
-                <div class="row sender">
-                    <div class="col">
-                        <i class="bi bi-person-fill"></i>
-                        <div class="message">
-                            <span>Hi, this is Jason Catadman. I'd like to switch from Web Technologies to Software Engineering, thanks!</span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row receiver">
-                    <div class="col">
-                        <div class="message">
-                            <span>Sure sir Catadman. I will work on that right now.</span>
-                        </div>
-                        <i class="bi bi-person"></i>
-                    </div>
-                </div>
-                <br>
-            </div>
-
-            <div class="modal-footer">
-                <form id="messageForm">
-                    <div class="d-flex align-items-center">
-                        <textarea id="messageInput" cols="45"></textarea>
-                        <div class="ms-auto" aria-hidden="true" style="margin-left: 10px">
-                            <input type="submit" value="Send">
-                        </div>
-                    </div>
-            </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="notesModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5"
-                    id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
             <div class="modal-body">
-                ...
+                <ul>
+                    <li>Student 1</li>
+                    <li>Student 2</li>
+                    <li>Student 3</li>
+                    <li>Student 4</li>
+                </ul>
+                <!-- Example if no students are enrolled -->
+                <!-- <p>No students enrolled in this class.</p> -->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save
-                    changes</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="remindersModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5"
-                    id="exampleModalLabel">Modal title</h1>
-                <button type="button" class="btn-close"
-                    data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ...
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary"
-                    data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save
-                    changes</button>
-            </div>
-        </div>
-    </div>
-</div>
+
+
+
+
+<?php
+include('processes/server/modals.php');
+?>
 
 <div class="modal fade" id="createClassModal" tabindex="-1"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -843,7 +627,7 @@ try {
                         <label for="subjectName" class="form-label">Select Subject Name: </label>
                         <?php
                         try {
-                            $stmt = $pdo->prepare("SELECT id, name, semester FROM subjects ORDER BY name ASC");
+                            $stmt = $pdo->prepare("SELECT id, name, semester FROM subjects ORDER BY name");
                             $stmt->execute();
                             $subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         } catch (PDOException $e) {
@@ -876,7 +660,6 @@ try {
                                 echo '<option selected>Select teacher below</option>';
                                 while ($teacher = $stmt->fetch(PDO::FETCH_ASSOC)) {
                                     echo '<option value="' . htmlspecialchars($teacher["fullName"], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($teacher["fullName"], ENT_QUOTES, 'UTF-8') . '</option>';
-
                                 }
                             } else {
                                 echo '<option>There is no staff added yet!</option>';
@@ -890,7 +673,7 @@ try {
                         <label for="semester" class="form-label">Select Semester:</label>
                         <select class="form-select" name="semester" required>
                             <?php
-                            $sql = "SELECT name FROM semester ORDER BY name ASC";
+                            $sql = "SELECT name FROM semester ORDER BY name ";
                             $stmt = $pdo->query($sql);
                             $semesters = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             ?>
@@ -912,8 +695,8 @@ try {
                         <textarea class="form-control" id="classDesc" name="classDesc" required></textarea>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-csms">Save Changes</button>
-                        <button type="button" class="btn btn-csms" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </form>
 
@@ -922,12 +705,32 @@ try {
     </div>
 </div>
 
+<section>
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto">Admin</strong>
 
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                You have just succesfully copied this class code.
+            </div>
+        </div>
+    </div>
+</section>
 
+<script>
+    const toastTrigger = document.getElementById('liveToastBtn')
+    const toastLiveExample = document.getElementById('liveToast')
 
-
-
-
+    if (toastTrigger) {
+        const toastBootstrap = bootstrap.Toast.getOrCreateInstance(toastLiveExample)
+        toastTrigger.addEventListener('click', () => {
+            toastBootstrap.show()
+        })
+    }
+</script>
 
 <script>
     document.getElementById('toggleButton').addEventListener('click', function() {
@@ -948,29 +751,53 @@ try {
     setInterval(getTime, 100);
 
     $(document).ready(function() {
-        $('#classes').DataTable();
+        $.fn.dataTable.ext.type.order['status-pre'] = function(data) {
+            // Define the order of the statuses
+            if (data === 'pending') {
+                return 1;
+            } else if (data === 'accepted') {
+                return 2;
+            } else if (data === 'rejected') {
+                return 3;
+            }
+            return 4;
+        };
 
-        $(document).ready(function() {
-            $('#classes tfoot th').each(function() {
-                var title = $(this).text();
-                $(this).html('<input type="text" placeholder="Search ' + title + '" />');
-            });
+        // Initialize the DataTable
+        var table = $('#classes').DataTable({
+            responsive: true,
+            columnDefs: [{
+                    type: 'status',
+                    targets: 4
+                } // Assuming the status column is the 4th column (index 3)
+            ],
+            order: [
+                [4, 'desc']
+            ] // Sort the 4th column (index 4) in descending order
+        });
 
-            var table = $('#classes').DataTable();
+        // Setup footer search inputs
+        $('#classes tfoot th').each(function() {
+            var title = $(this).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" />');
+        });
 
-            table.columns().every(function() {
-                var that = this;
+        // Apply search functionality
+        table.columns().every(function() {
+            var that = this;
 
-                $('input', this.footer()).on('keyup change clear', function() {
-                    if (that.search() !== this.value) {
-                        that
-                            .search(this.value)
-                            .draw();
-                    }
-                });
+            $('input', this.footer()).on('keyup change clear', function() {
+                if (that.search() !== this.value) {
+                    that
+                        .search(this.value)
+                        .draw();
+                }
             });
         });
     });
+
+
+
 
     document.getElementById('messageForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -1011,6 +838,11 @@ try {
 </script>
 
 <script>
+    function copyText() {
+        var text = document.getElementById("text-to-copy").innerText;
+        navigator.clipboard.writeText(text).then(function() {}).catch(function(error) {});
+    }
+
     function confirmDelete(id) {
         Swal.fire({
             title: 'Are you sure?',
@@ -1044,7 +876,7 @@ try {
 
 </html>
 
-<?php 
+<?php
 
 include('processes/server/alerts.php');
 

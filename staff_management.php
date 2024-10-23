@@ -78,38 +78,9 @@ include('processes/server/conn.php');
     <div class="container-fluid whole-container">
         <div class="row">
 
-            <div class="sidebar-container" id="sidebarContainer">
-                <div class="sidebar-content text-center">
-                    <small class="c-white" id="currentTime"> </small>
-
-                    <img src="external/img/ccs_logo-removebg-preview.png" class="img-fluid logo space-sm">
-                    <h4 class="bold c-white ">Welcome, Admin!</h4>
-                    <div class="navigation-links" style="text-align: left;">
-                        <span><i class="bi bi-house"></i> Home</span>
-                        <a href="dashboard.php">
-                            <p><i class="bi bi-kanban"></i> Index</p>
-                        </a>
-                        <hr>
-                        <span><i class="bi bi-menu-button-wide"></i> Management</span>
-                        <a href="class_management.php">
-                            <p><i class="bi bi-book"></i> Class Management</p>
-                        </a>
-                        <a href="staff_management.php">
-                            <p><i class="bi bi-person-square"></i> Teacher Management</p>
-                        </a>
-                        <a href="subject_management.php">
-                            <p><i class="bi bi-journals"></i> Subject Management</p>
-                        </a>
-                        <a href="semester_management.php">
-                            <p><i class="bi bi-calendar-event"></i> Semester Management</p>
-                        </a>
-                        <hr>
-                        <a href="admin_management.php">
-                            <p><i class="bi bi-file-person-fill"></i> Admin User</p>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            include('processes/server/sidebar.php');
+            ?>
             <div class="col">
 
                 <div
@@ -241,7 +212,7 @@ include('processes/server/conn.php');
                 <td>' . htmlspecialchars($row['department']) . '</td>
                 <td>' . htmlspecialchars($row['class']) . '</td>
                 <td>
-                    <button type="button" data-bs-toggle="modal" data-bs-target="#viewModal' . $row['id'] . '" class="btn btn-success">
+                    <button type="button" data-bs-toggle="modal" data-bs-target="#viewModal' . $row['id'] . '" class="btn btn-primary">
                         <i class="bi bi-eye"></i> View
                     </button>
                     <button type="button" data-bs-toggle="modal" data-bs-target="#editModal' . $row['id'] . '" class="btn btn-warning">
@@ -292,140 +263,9 @@ include('processes/server/conn.php');
     </div>
 </div>
 
-<div class="modal fade" id="notificationModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Notifications</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-
-                <div class="d-flex align-items-center">
-                    <span>Notifications</span>
-                    <div class=" ms-auto" aria-hidden="true"><a href
-                            class="nav-ham-link"> View All</a> | <a href
-                            class="nav-ham-link"> Read All</a></div>
-                </div>
-
-                <br>
-
-                <div class="row ">
-                    <div class="col-sm-2 text-center">
-                        <h1><i class="bi bi-bell-fill"></i></h1>
-                    </div>
-                    <div class="col">
-                        <h5>You have received a new notification!</h5>
-                        <p>Test notification!</p>
-                    </div>
-                </div>
-
-                <br>
-
-                <div class="row ">
-                    <div class="col-sm-2 text-center">
-                        <h1><i class="bi bi-bell-fill"></i></h1>
-                    </div>
-                    <div class="col">
-                        <h5>You have received a new notification!</h5>
-                        <p>Test notification!</p>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="messageModal" tabindex="-1"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Chats</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                    aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <input type="text" name="search" placeholder="Input person here" required class="input-search">
-                </form>
-                <br>
-                <div class="row msg align-items-center" data-bs-target="#actualMessageModal" data-bs-toggle="modal">
-                    <div class="col-sm-3 text-center" style="border-right: 1px solid black;">
-                        <h1><i class="bi bi-person-fill"></i></h1>
-                        <span>Jason Catadman</span>
-                    </div>
-                    <div class="col">
-                        <p><em>You: Sure sir Catadman. I will work on that right now.</em></p>
-                    </div>
-                </div>
-                <br>
-                <div class="row unread msg align-items-center">
-                    <div class="col-sm-3 text-center" style="border-right: 1px solid black;">
-                        <h1><i class="bi bi-person-fill"></i></h1>
-                        <span>Ceed Lorenzo</span>
-                    </div>
-                    <div class="col">
-                        <p><em>Lorenzo: Good afternoon sir, ask ko lang if available po si...</em></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="actualMessageModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Chats</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body" id="chatBody">
-                <div class="time text-center grey">
-                    2:09 PM - 8/11/2024
-                </div>
-                <br>
-                <div class="row sender">
-                    <div class="col">
-                        <i class="bi bi-person-fill"></i>
-                        <div class="message">
-                            <span>Hi, this is Jason Catadman. I'd like to switch from Web Technologies to Software Engineering, thanks!</span>
-                        </div>
-                    </div>
-                </div>
-                <br>
-                <div class="row receiver">
-                    <div class="col">
-                        <div class="message">
-                            <span>Sure sir Catadman. I will work on that right now.</span>
-                        </div>
-                        <i class="bi bi-person"></i>
-                    </div>
-                </div>
-                <br>
-            </div>
-
-            <div class="modal-footer">
-                <form id="messageForm">
-                    <div class="d-flex align-items-center">
-                        <textarea id="messageInput" cols="45"></textarea>
-                        <div class="ms-auto" aria-hidden="true" style="margin-left: 10px">
-                            <input type="submit" value="Send">
-                        </div>
-                    </div>
-            </div>
-            </form>
-
-        </div>
-    </div>
-</div>
-
-
+<?php
+include('processes/server/modals.php');
+?>
 
 <div class="modal fade" id="remindersModal" tabindex="-1"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -494,7 +334,7 @@ include('processes/server/conn.php');
                     <div class="mb-3">
                         <label for="class" class="form-label">Class</label>
                         <select class="form-select" name="class" required>
-                            <option disabled selected>Select a class</option>
+                            <option value="" disabled selected>Select a class</option>
                             <optgroup label="Information Technology Department"></optgroup>
                             <option value="BSIT-1A">BSIT-1A</option>
                             <option value="BSIT-1B">BSIT-1B</option>
@@ -531,8 +371,8 @@ include('processes/server/conn.php');
                     </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-csms" value="Update">
-                <button type="button" class="btn btn-csms" data-bs-dismiss="modal">Close</button>
+                <input type="submit" class="btn btn-primary" value="Update">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 </form>
             </div>
         </div>
@@ -613,7 +453,7 @@ while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
                         <div class="mb-3">
                             <label for="class' . $row['id'] . '" class="form-label">Class</label>
                             <select class="form-control" name="class" id="class-' . $row['id'] . '">
-                                <option disabled selected>Select a class</option>
+                                <option value="" disabled selected>Select a class</option>
                             <optgroup label="Information Technology Department"></optgroup>
                             <option value="BSIT-1A">BSIT-1A</option>
                             <option value="BSIT-1B">BSIT-1B</option>

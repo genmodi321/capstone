@@ -78,13 +78,14 @@ include('processes/server/conn.php');
 
 <?php
 include 'processes/server/conn.php';
-$query = "SELECT id, name, code, class, teacher, semester FROM subjects";
+$query = "SELECT id, name, type, code, class, teacher, semester FROM subjects";
 $result = $pdo->query($query);
 $subjectData = [];
 while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
     $subjectData[] = [
         'id' => htmlspecialchars(($row['id'])),
         'name' => htmlspecialchars($row['name']),
+        'type' => htmlspecialchars($row['type']),
         'code' => htmlspecialchars($row['code']),
         'class' => htmlspecialchars($row['class']),
         'teacher' => htmlspecialchars($row['teacher']),
@@ -196,7 +197,7 @@ $subjectDataJSON = json_encode($subjectData);
                 </div>
 
                 <div class="container-fluid actual-content">
-                    <div class="container wd-75">
+                    <div class="container-fluid">
                         <div class="welcome-container">
 
                             <div class="d-flex align-items-center">
@@ -545,10 +546,20 @@ $subjectDataJSON = json_encode($subjectData);
                     </div>
 
                     <div class="mb-3">
+                        <label for="type" class="form-label">Class Type </label>
+                        <select class="form-control" name="type" id=type>
+                        <option default selected disabled> Select class type below</option>
+                        <option value="Lecture">Lecture</option>
+                        <option value="Laboratory">Laboratory</option>
+                        </select>
+                     
+                    </div>
+
+                    <div class="mb-3">
                         <label for="teacher" class="form-label">Select
                             Teacher: </label>
                         <select class="form-select" name="teacher" required>
-                            <option> Select a teacher below</option>
+                            <option default selected disabled> Select a teacher below</option>
                             <?php
                             require 'processes/server/conn.php';
                             $sql = "SELECT id, fullName FROM staff_accounts";
@@ -680,6 +691,7 @@ foreach ($subjects as $subject) {
                             <label for="editSubjectCode<?php echo $subject['id']; ?>" class="form-label">Subject Code</label>
                             <input type="text" class="form-control" id="editSubjectCode<?php echo $subject['id']; ?>" name="code" value="<?php echo htmlspecialchars($subject['code']); ?>" required>
                         </div>
+                        
                         <div class="mb-3">
                             <label for="editClass<?php echo $subject['id']; ?>" class="form-label">Select Class</label>
                             <select class="form-select" id="editClass<?php echo $subject['id']; ?>" name="class">
@@ -725,6 +737,16 @@ foreach ($subjects as $subject) {
                             </select>
 
                         </div>
+                        <div class="mb-3">
+                        <label for="type" class="form-label">Class Type </label>
+                        <select class="form-control" name="type" id=type>
+                        <option default selected disabled> Select class type below</option>
+                        <option value="Lecture">Lecture</option>
+                        <option value="Laboratory">Laboratory</option>
+                        </select>
+                     
+                    </div>
+
                         <div class="mb-3">
                             <label for="editTeacher<?php echo $subject['id']; ?>" class="form-label">Select Teacher</label>
                             <select class="form-select" id="editTeacher<?php echo $subject['id']; ?>" name="teacher">
@@ -778,7 +800,7 @@ foreach ($subjects as $subject) {
         var table = $('#classes').DataTable({
             data: subjectData.map(row => {
           
-                row.actions = `<button type="button" class="btn btn-success view-btn" data-bs-toggle="modal" data-bs-target="#viewModal${row.id}">
+                row.actions = `<button type="button" class="btn btn-primary view-btn" data-bs-toggle="modal" data-bs-target="#viewModal${row.id}">
                               <i class="bi bi-eye"></i> View
                           </button>
             <button type="button" class="btn btn-warning edit-btn" data-bs-toggle="modal" data-bs-target="#editModal${row.id}">
@@ -787,10 +809,11 @@ foreach ($subjects as $subject) {
                           <button type="button" class="btn btn-danger delete-btn" data-id="${row.id}">
                               <i class="bi bi-trash"></i> Delete
                           </button>`;
-                return [row.name, row.code, row.class, row.teacher, row.semester, row.actions];
+                          return [`${row.name} | <span class="alert alert-primary" style="padding:2px">${row.type}</span>`, row.code, row.class, row.teacher, row.semester, row.actions];
             }),
             columns: [{
-                    title: 'Subject Name'
+                    title: 'Subject Name',
+                 
                 }, 
                 {
                     title: 'Subject Code'

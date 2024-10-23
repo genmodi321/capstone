@@ -64,10 +64,8 @@ a {
 
 .whole-container {
     background-color: #709775;
-    height: 100vh;
+ 
 }
-
-
 
 .space-sm {
     margin: 10px;
@@ -165,7 +163,7 @@ a {
     border-bottom: 1px solid black;
 }
 
-.sidebar-container {
+.sidebar {
     background-color: #415D43;
     transition: width 0.3s ease; 
     width: 250px;
@@ -196,3 +194,9 @@ a {
     opacity: 1;
     transition: opacity 0.2s ease;
 }
+
+
+
+  .mainbar{
+    width: 75%;
+  }
