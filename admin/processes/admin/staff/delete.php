@@ -12,20 +12,20 @@ if (isset($_GET['id'])) {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         if ($stmt->execute()) {
             $_SESSION['STATUS'] = "STAFF_DELETE_SUCCESS";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
             exit();
         } else {
             $_SESSION['STATUS'] = "STAFF_DELETE_ERROR";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
             exit();
         }
     } catch (PDOException $e) {
         $_SESSION['STATUS'] = "STAFF_DELETE_ERROR";
-        header('Location: ../../../staff_management.php');
+        header('Location: ../../../../teacher_management.php');
     }
 } else {
     $_SESSION['STATUS'] = "STAFF_DELETE_ERROR";
-        header('Location: ../../../staff_management.php');
+        header('Location: ../../../../teacher_management.php');
     exit();
 }
 ?>

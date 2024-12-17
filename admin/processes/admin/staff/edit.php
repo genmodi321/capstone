@@ -8,6 +8,8 @@ if (isset($_GET['id'])) {
     $department = $_POST['department'];
     $password = !empty($_POST['password']) ? password_hash($_POST['password'], PASSWORD_BCRYPT) : null;
     $class = $_POST['class'];
+    $gender = $_POST['gender'];
+    $phone_number = $_POST['phone_number'];
 
     try {
         // Check if email already exists for another staff member
@@ -19,17 +21,17 @@ if (isset($_GET['id'])) {
 
         if ($stmt->rowCount() > 0) {
             $_SESSION['STATUS'] = "STAFF_EMAIL_EXISTS";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
             exit();
         }
 
         // Prepare the SQL statement for updating the account
         if ($password) {
             // Update with password
-            $sql = "UPDATE staff_accounts SET fullName = :full_name, email = :email, department = :department, password = :password, class = :class WHERE id = :id";
+            $sql = "UPDATE staff_accounts SET fullName = :full_name, email = :email, department = :department, password = :password, class = :class, gender = :gender, phone_number = :phone_number WHERE id = :id";
         } else {
             // Update without password
-            $sql = "UPDATE staff_accounts SET fullName = :full_name, email = :email, department = :department, class = :class WHERE id = :id";
+            $sql = "UPDATE staff_accounts SET fullName = :full_name, email = :email, department = :department, class = :class, gender = :gender, phone_number = :phone_number WHERE id = :id";
         }
 
         $stmt = $pdo->prepare($sql);
@@ -39,6 +41,8 @@ if (isset($_GET['id'])) {
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':department', $department);
         $stmt->bindParam(':class', $class);
+        $stmt->bindParam(':gender', $gender);
+        $stmt->bindParam(':phone_number', $phone_number);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
 
         // Bind the password only if it's provided
@@ -49,18 +53,18 @@ if (isset($_GET['id'])) {
         // Execute the query and check for success
         if ($stmt->execute()) {
             $_SESSION['STATUS'] = "STAFF_ACCOUNT_UPDATED";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
             exit();
         } else {
             $_SESSION['STATUS'] = "STAFF_ACCOUNT_FAIL_UPDATE";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
             exit();
         }
     } catch (PDOException $e) {
         $_SESSION['STATUS'] = "STAFF_ACCOUNT_FAIL_UPDATE";
-        header('Location: ../../../staff_management.php');
+        header('Location: ../../../teacher_management.php');
     }
 } else {
     $_SESSION['STATUS'] = "STAFF_ACCOUNT_FAIL_UPDATE";
-    header('Location: ../../../staff_management.php');
+    header('Location: ../../../teacher_management.php');
 }

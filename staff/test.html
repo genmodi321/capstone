@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Grade Sheet</title>
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .header img {
+            height: 100px;
+        }
+
+        .details {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .details p {
+            margin: 5px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+
+        tr.male, tr.female {
+            background-color: #ddd;
+            font-weight: bold;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="header">
+            <img src="../external/img/wmsu_Logo-removebg-preview.png"
+                class="img-fluid small-logo">
+            <img src="../external/img/wmsu_Logo-removebg-preview.png"
+                class="img-fluid small-logo">
+            <h2>Western Mindanao State University</h2>
+            <h3>College of Computing Studies</h3>
+            <h4>Zamboanga City</h4>
+        </div>
+
+        <div class="details">
+            <p><b>Adviser:</b> John Doe</p>
+            <p><b>Subject:</b> Software Engineering</p>
+            <p><b>Year and Section:</b> IT - 141</p>
+            <p><b>Semester:</b> 1st Semester</p>
+            <p><b>School Year:</b> 2024</p>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th rowspan="2">No.</th>
+                        <th rowspan="2">Names of Students</th>
+                        <th colspan="5">Quizzes (20%)</th>
+                        <th>Total</th>
+                        <th colspan="5">Activities (20%)</th>
+                        <th>Total</th>
+                        <th colspan="4">Projects (40%)</th>
+                        <th>Total</th>
+                        <th colspan="2">Exams (20%)</th>
+                        <th>Total</th>
+                        <th rowspan="2">GPA</th>
+                    </tr>
+                    <tr>
+                        <th>Q1 (LC)</th>
+                        <th>Q1 (LB)</th>
+                        <th>Q3</th>
+                        <th>Q4</th>
+                        <th>Total</th>
+                        <th>ACT. 1</th>
+                        <th>ACT. 2</th>
+                        <th>ACT. 3</th>
+                        <th>ACT. 4</th>
+                        <th>Total</th>
+                        <th>P. 1</th>
+                        <th>P. 2</th>
+                        <th>P. 3</th>
+                        <th>P. 4</th>
+                        <th>Midterms</th>
+                        <th>Finals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="male">
+                        <td colspan="25">Male</td>
+                    </tr>
+                    <tr>
+                        <td>1.)</td>
+                        <td>Aquino, Leonard</td>
+                        <td>15/30</td>
+                        <td>15/30</td>
+                        <td>15/30</td>
+                        <td>15/30</td>
+                        <td>60/120</td>
+                        <td>20/50</td>
+                        <td>45/50</td>
+                        <td>50/50</td>
+                        <td>50/50</td>
+                        <td>165/200</td>
+                        <td>25/25</td>
+                        <td>25/25</td>
+                        <td>25/25</td>
+                        <td>25/25</td>
+                        <td>100</td>
+                        <td>50</td>
+                        <td>100</td>
+                        <td>150</td>
+                        <td>1.00</td>
+                    </tr>
+                    <tr class="female">
+                        <td colspan="25">Female</td>
+                    </tr>
+                    <tr>
+                        <td>1.)</td>
+                        <td>Abdulla, Nurfitra</td>
+                        <td>15/30</td>
+                        <td>15/30</td>
+                        <td>15/30</td>
+                        <td>15/30</td>
+                        <td>60/120</td>
+                        <td>20/50</td>
+                        <td>45/50</td>
+                        <td>50/50</td>
+                        <td>50/50</td>
+                        <td>165/200</td>
+                        <td>25/25</td>
+                        <td>25/25</td>
+                        <td>25/25</td>
+                        <td>25/25</td>
+                        <td>100</td>
+                        <td>50</td>
+                        <td>100</td>
+                        <td>150</td>
+                        <td>1.00</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

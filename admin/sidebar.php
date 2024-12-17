@@ -22,15 +22,15 @@
             </li>
             <hr style="border-bottom: 1px solid white;">
 
-            <li class="sidebar-item <?php echo ($current_page == 'class_management.php') ? 'active' : ''; ?>">
-                <a class="sidebar-link" href="class_management.php">
-                    <i class="bi bi-person align-middle"></i> <span class="align-middle">Class Management</span>
+            <li class="sidebar-item <?php echo ($current_page == 'teacher_management.php') ? 'active' : ''; ?>">
+                <a class="sidebar-link" href="teacher_management.php">
+                    <i class="bi bi-person-lines-fill align-middle"></i> <span class="align-middle" >Adviser & Teacher Management</span>
                 </a>
             </li>
 
-            <li class="sidebar-item <?php echo ($current_page == 'teacher_management.php') ? 'active' : ''; ?>">
-                <a class="sidebar-link" href="teacher_management.php">
-                    <i class="bi bi-person-lines-fill align-middle"></i> <span class="align-middle">Teacher Management</span>
+            <li class="sidebar-item <?php echo ($current_page == 'class_management.php') ? 'active' : ''; ?>">
+                <a class="sidebar-link" href="class_management.php">
+                    <i class="bi bi-person align-middle"></i> <span class="align-middle">Class Management</span>
                 </a>
             </li>
 

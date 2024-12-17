@@ -1,68 +1,65 @@
 <?php
-session_start();
-include_once '../../server/conn.php'; 
+require '../../server/conn.php'; // Ensure you include the PDO connection
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+session_start(); // Start session to manage status messages
 
-    $firstName = trim($_POST['first_name']);
-    $middleName = trim($_POST['middle_name']);
-    $lastName = trim($_POST['last_name']);
-    $username = trim($_POST['username']);
-    $email = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $confirmPassword = trim($_POST['confirm_password']);
-    $phoneNumber = trim($_POST['phone_number']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Sanitize input data
+    $username = $_POST['username'];
+    $email = $_POST['email'];
+    $password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password before storing
+    $firstName = $_POST['first_name'];
+    $middleName = $_POST['middle_name'] ?? ''; // Handle optional middle name
+    $lastName = $_POST['last_name'];
+    $phoneNumber = $_POST['phone_number'];
     $gender = $_POST['gender'];
-
-    // Check if passwords match
-    if ($password !== $confirmPassword) {
-        die('Passwords do not match.');
-    }
+    $dateCreated = date('Y-m-d H:i:s'); // Get current timestamp for date_created
 
     try {
         // Check if username or email already exists
-        $sql = "SELECT * FROM admin WHERE username = :username OR email = :email";
-        $stmt = $pdo->prepare($sql);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
+        $stmt = $pdo->prepare("SELECT COUNT(*) FROM admin WHERE username = :username OR email = :email");
+        $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->execute();
-        
-        // Fetch results
-        if ($stmt->rowCount() > 0) {
-            // If there's a duplicate
-            $_SESSION['STATUS'] = "DUPLICATE_ACCOUNT";
-            header('Location: ../../../admin_management.php');
-            exit;
-        }
+        $duplicateCount = $stmt->fetchColumn();
 
-        // If no duplicate, proceed to insert new admin
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $sql = "INSERT INTO admin (first_name, middle_name, last_name, username, email, password, phone_number, gender)
-                VALUES (:first_name, :middle_name, :last_name, :username, :email, :password, :phone_number, :gender)";
-
-        $stmt = $pdo->prepare($sql);
-
-        // Bind parameters
-        $stmt->bindParam(':first_name', $firstName);
-        $stmt->bindParam(':middle_name', $middleName);
-        $stmt->bindParam(':last_name', $lastName);
-        $stmt->bindParam(':username', $username);
-        $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $hashedPassword);
-        $stmt->bindParam(':phone_number', $phoneNumber);
-        $stmt->bindParam(':gender', $gender);
-
-        // Execute and handle result
-        if ($stmt->execute()) {
-            $_SESSION['STATUS'] = "ADMIN_ADDED_SUCCESFULLY";
-            header('Location: ../../../admin_management.php');
+        if ($duplicateCount > 0) {
+            // If duplicate is found, set session status and redirect
+            $_SESSION['STATUS'] = "ADMIN_DUPLICATE_ACCOUNT";
         } else {
-            $_SESSION['STATUS'] = "ADMIN_ADDED_ERROR";
-            header('Location: ../../../admin_management.php');
+            // Prepare SQL query to insert admin
+            $stmt = $pdo->prepare("
+                INSERT INTO admin (username, email, password, first_name, middle_name, last_name, phone_number, gender, date_created) 
+                VALUES (:username, :email, :password, :first_name, :middle_name, :last_name, :phone_number, :gender, :date_created)
+            ");
+            
+            // Bind parameters to the prepared statement
+            $stmt->bindParam(':username', $username, PDO::PARAM_STR);
+            $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+            $stmt->bindParam(':password', $password, PDO::PARAM_STR);
+            $stmt->bindParam(':first_name', $firstName, PDO::PARAM_STR);
+            $stmt->bindParam(':middle_name', $middleName, PDO::PARAM_STR);
+            $stmt->bindParam(':last_name', $lastName, PDO::PARAM_STR);
+            $stmt->bindParam(':phone_number', $phoneNumber, PDO::PARAM_STR);
+            $stmt->bindParam(':gender', $gender, PDO::PARAM_STR);
+            $stmt->bindParam(':date_created', $dateCreated, PDO::PARAM_STR);
+
+            // Execute the statement
+            if ($stmt->execute()) {
+                // Set session status for success
+                $_SESSION['STATUS'] = "ACCOUNT_C_SUCCESFUL";
+            } else {
+                // Set session status for failure
+                $_SESSION['STATUS'] = "ADMIN_CREATE_FAILED";
+            }
         }
     } catch (PDOException $e) {
-        $_SESSION['STATUS'] = "ADMIN_ADDED_ERROR";
-        header('Location: ../../../admin_management.php');
+        // Catch any exceptions (e.g., connection issues)
+        $_SESSION['STATUS'] = "ADMIN_CREATE_ERROR: " . $e->getMessage();
     }
+
+    // Redirect back to the admin management page (or wherever you want)
+    header("Location: ../../../admin_management.php");
+    exit;
 }
+?>

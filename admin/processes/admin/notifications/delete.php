@@ -9,7 +9,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['id'])) {
     $stmt = $pdo->prepare("DELETE FROM admin_notifications WHERE id = ?");
     $stmt->execute([$id]);
     // Redirect or return a success message
-    header('Location: /path/to/notifications'); // Change to your redirect path
+    if (isset($_SERVER['HTTP_REFERER'])) {
+        header('Location: ' . $_SERVER['HTTP_REFERER']);
+        exit();
+    } else {
+        header('Location: ../../index.php'); // Fallback if no referrer
+        exit();
+    }
 }
 
 ?>

@@ -59,7 +59,7 @@ session_start();
     <div class="container-fluid login-container">
 
         <div class="actual-login-container">
-            <small><a href="index.html" class="gb"><i class="bi bi-arrow-left-circle-fill"></i> Go back</a></small>
+            <small><a href="index.php" class="gb"><i class="bi bi-arrow-left-circle-fill"></i> Go back</a></small>
             <img src="external/img/wmsu_Logo-removebg-preview.png"
                 class="img-fluid big-logo">
             <h5 class="bold">ADMIN LOGIN</h5>

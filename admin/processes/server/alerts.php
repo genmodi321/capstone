@@ -23,7 +23,7 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_NOT_LOGGED_IN') 
     </script>
     ";
     unset($_SESSION['STATUS']);
-} elseif (isset($_SESSION['STATUS'])  && $_SESSION['STATUS'] == "ACCOUNT_C_SUCCESFUL") {
+} elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == "ACCOUNT_C_SUCCESFUL") {
     echo "
     <script>
         Swal.fire({
@@ -34,7 +34,7 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_NOT_LOGGED_IN') 
     </script>
     ";
     unset($_SESSION['STATUS']);
-} elseif (isset($_SESSION['STATUS'])  && $_SESSION['STATUS'] == "ADMIN_INVALID_LOGIN") {
+} elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == "ADMIN_INVALID_LOGIN") {
     echo "
     <script>
         Swal.fire({
@@ -45,7 +45,7 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_NOT_LOGGED_IN') 
     </script>
     ";
     unset($_SESSION['STATUS']);
-} elseif (isset($_SESSION['STATUS'])  && $_SESSION['STATUS'] == "LOG_OUT_SUCCESFUL") {
+} elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == "LOG_OUT_SUCCESFUL") {
     echo "
     <script>
         Swal.fire({
@@ -56,8 +56,19 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_NOT_LOGGED_IN') 
     </script>
     ";
     unset($_SESSION['STATUS']);
-}
-elseif (isset($_SESSION['STATUS'])  && $_SESSION['STATUS'] == "DUPLICATE_ACCOUNT") {
+} elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == "ADMIN_DUPLICATE_ACCOUNT") {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Account already made!',
+            text: 'This account already exists as a duplicate. Please create a new one entirely!',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} 
+elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == "DUPLICATE_ACCOUNT") {
     echo "
     <script>
         Swal.fire({
@@ -69,7 +80,64 @@ elseif (isset($_SESSION['STATUS'])  && $_SESSION['STATUS'] == "DUPLICATE_ACCOUNT
     ";
     unset($_SESSION['STATUS']);
 }
+elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == "ADMIN_DELETED_SUCCESS") {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Account deletion succesful!',
+            text: 'The admin account has just been succesfully deleted!',
+            icon: 'success'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+}
+elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == "ADMIN_EDIT_SUCCESFUL") {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Account edition succesful!',
+            text: 'The admin account credentials and details have just been succesfully edited!',
+            icon: 'success'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+}
+
+
+// Handling the ADMIN_CREATE_FAILED status
+elseif (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_CREATE_FAILED') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Admin account creation failed!',
+            text: 'There was an error while creating the admin account. Please try again.',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+}
+
+// Handling the ADMIN_CREATE_ERROR status
+elseif (isset($_SESSION['STATUS']) && strpos($_SESSION['STATUS'], 'ADMIN_CREATE_ERROR') !== false) {
+    $error_message = str_replace('ADMIN_CREATE_ERROR: ', '', $_SESSION['STATUS']); // Extract error message
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Admin account creation error!',
+            text: 'An error occurred: $error_message. Please check your input and try again.',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+}
 ?>
+
+
+
 
 
 
@@ -130,7 +198,7 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_LOGIN_SUCCESFUL'
     ";
     unset($_SESSION['STATUS']);
 } else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'REMINDERS_DELETED_SUCCESFULLY') {
-    echo "W
+    echo "
     <script>
         Swal.fire({
             title: 'Edition of note succesful!',
@@ -141,7 +209,7 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_LOGIN_SUCCESFUL'
     ";
     unset($_SESSION['STATUS']);
 } else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADD_REMINDER_SUCCESS') {
-    echo "W
+    echo "
     <script>
         Swal.fire({
             title: 'Addition of remninder succesful!',
@@ -152,7 +220,7 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_LOGIN_SUCCESFUL'
     ";
     unset($_SESSION['STATUS']);
 } else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'REMINDERS_DELETED_SUCCESFULLY') {
-    echo "W
+    echo "
     <script>
         Swal.fire({
             title: 'Deletion of remninder succesful!',
@@ -371,7 +439,7 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'STAFF_ADDED_SUCCESSFUL
     echo "
     <script>
         Swal.fire({
-            title: 'Subject deletion success!',
+            title: 'Staff deletion success!',
             text: 'You have succesfully deleted an existing staff!',
             icon: 'success'
         });
@@ -413,37 +481,79 @@ if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'STAFF_ADDED_SUCCESSFUL
     unset($_SESSION['STATUS']);
 }
 ?>
-
 <?php
-if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'CLASS_STATUS_ACCEPTED') {
+if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_FIELDS_EMPTY') {
     echo "
     <script>
         Swal.fire({
-            title: 'Class Accepted!',
-            text: 'The class has been successfully accepted.',
-            icon: 'success'
+            title: 'Empty fields!',
+            text: 'Please fill out all fields before submitting.',
+            icon: 'warning'
         });
     </script>
     ";
     unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'CLASS_STATUS_ERROR') {
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_DATE_ERROR') {
     echo "
     <script>
         Swal.fire({
-            title: 'Class Acceptance Error!',
-            text: 'There was an error accepting the class. Please try again.',
+            title: 'Date Error!',
+            text: 'The start and end dates cannot be the same. Please select different dates.',
             icon: 'error'
         });
     </script>
     ";
     unset($_SESSION['STATUS']);
-}
-else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'CLASS_STATUS_DISAPPROVE_ERROR') {
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_NAME_EXISTS') {
     echo "
     <script>
         Swal.fire({
-            title: 'Disapproval Error!',
-            text: 'There was an error in disapproving the class. Please try again.',
+            title: 'Duplicate Semester!',
+            text: 'The semester name already exists and is not archived. Please choose a different name.',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_ADDED_SUCCESS') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Success!',
+            text: 'The semester was successfully added.',
+            icon: 'success'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_ADD_FAILED') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Addition Failed!',
+            text: 'There was an error adding the semester. Please try again.',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_DATABASE_ERROR') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Database Error!',
+            text: 'An error occurred while connecting to the database. Please try again later.',
+            icon: 'error'
+        });
+    </script>
+    ";
+    unset($_SESSION['STATUS']);
+} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_ADD_INVALID_REQUEST') {
+    echo "
+    <script>
+        Swal.fire({
+            title: 'Invalid Request!',
+            text: 'The request method was invalid. Please try again.',
             icon: 'error'
         });
     </script>
@@ -451,189 +561,203 @@ else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'CLASS_STATUS_DISA
     unset($_SESSION['STATUS']);
 }
 ?>
-
-
-
-
-
-
-
-
-
-
 <?php
-if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_ADDED_SUCCESFULLY') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Admin addition succesful!',
-            text: 'You have succesfully added a new admin!',
-            icon: 'success'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_ADDED_ERROR') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Admin addition error!',
-            text: 'There was an error in adding a new admin. Please try again!',
-            icon: 'error'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_DELETE_SUCCESS') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Admin deletion success!',
-            text: 'You have succesfully deleted an existing admin!',
-            icon: 'success'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_DELETE_ERROR') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Admin deletion error!',
-            text: 'There was an error in deleting an existing admin. Please try again.',
-            icon: 'error'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_EDIT_SUCCESFULLY') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Admin update success!',
-            text: 'You have succesfully updated the existing admin details',
-            icon: 'success'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADMIN_EDIT_ERROR') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Admin update error!',
-            text: 'There was an error in updating the admin details. Please try again.',
-            icon: 'error'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-}
-?>
 
-
-<?php
-if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADD_SEMESTER_SUCCESFUL') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester addition succesful!',
-            text: 'You have succesfully added a new semester!',
-            icon: 'success'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'ADD_SEMESTER_FAIL') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester addition error!',
-            text: 'There was an error in adding a new semester. Please try again!',
-            icon: 'error'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_DELETED_SUCCESFULLY') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester deletion success!',
-            text: 'You have succesfully deleted an existing semester!',
-            icon: 'success'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_DELETION_ERROR') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester deletion error!',
-            text: 'There was an error in deleting an existing semester. Please try again.',
-            icon: 'error'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_EDITION_SUCCESFUL') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester update success!',
-            text: 'You have succesfully updated the existing semester details',
-            icon: 'success'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'SEMESTER_EDITION_ERROR') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester update error!',
-            text: 'There was an error in updating the semester details. Please try again.',
-            icon: 'error'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'UPDATE_SEMESTER_SUCCESSFUL') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester update succesful!',
-            text: 'You have succesfully updated the current semester!',
-            icon: 'success'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
-} else if (isset($_SESSION['STATUS']) && $_SESSION['STATUS'] == 'UPDATE_SEMESTER_ERROR') {
-    echo "
-    <script>
-        Swal.fire({
-            title: 'Semester update error!',
-            text: 'There was an error in updating the current semester Please try again.',
-            icon: 'error'
-        });
-    </script>
-    ";
-    unset($_SESSION['STATUS']);
+// Check for semester archive status
+if (isset($_SESSION['STATUS'])) {
+    if ($_SESSION['STATUS'] == 'SEMESTER_ARCHIVED_SUCCESS') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Archive Successful!',
+                text: 'The semester and its related classes and subjects have been successfully archived.',
+                icon: 'success'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_ARCHIVE_FAILED') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Archive Failed!',
+                text: 'An error occurred while archiving the semester. Please try again.',
+                icon: 'error'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    }
 }
 
+// Check for semester deletion status
+if (isset($_SESSION['STATUS'])) {
+    if ($_SESSION['STATUS'] == 'SEMESTER_DELETE_SUCCESS') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Deleted!',
+                text: 'Semester deleted successfully.',
+                icon: 'success'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_DELETE_FAILED') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Deletion Failed!',
+                text: 'Failed to delete semester.',
+                icon: 'error'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_DELETE_ERROR' && isset($_SESSION['ERROR_MESSAGE'])) {
+        $errorMessage = $_SESSION['ERROR_MESSAGE'];
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error occurred: {$errorMessage}',
+                icon: 'error'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+        unset($_SESSION['ERROR_MESSAGE']);
+    }
+}
 
+// Check for semester update status
+if (isset($_SESSION['STATUS'])) {
+    if ($_SESSION['STATUS'] == 'SEMESTER_UPDATE_SUCCESS') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Updated!',
+                text: 'Semester updated successfully.',
+                icon: 'success'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_UPDATE_FAILED') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Update Failed!',
+                text: 'Failed to update semester.',
+                icon: 'error'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_UPDATE_ERROR' && isset($_SESSION['ERROR_MESSAGE'])) {
+        $errorMessage = $_SESSION['ERROR_MESSAGE'];
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Error!',
+                text: 'Error occurred: {$errorMessage}',
+                icon: 'error'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+        unset($_SESSION['ERROR_MESSAGE']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_FIELDS_EMPTY') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Empty Fields!',
+                text: 'All fields are required.',
+                icon: 'warning'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    }
+}
 
+// Check for semester activation status
+if (isset($_SESSION['STATUS'])) {
+    if ($_SESSION['STATUS'] == 'SEMESTER_ACTIVATED') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Activated!',
+                text: 'Semester activated successfully.',
+                icon: 'success'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_ACTIVATION_ERROR' && isset($_SESSION['ERROR_MESSAGE'])) {
+        $errorMessage = $_SESSION['ERROR_MESSAGE'];
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Activation Failed!',
+                text: 'Error: {$errorMessage}',
+                icon: 'error'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+        unset($_SESSION['ERROR_MESSAGE']);
+    } elseif ($_SESSION['STATUS'] == 'INVALID_REQUEST') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Invalid Request!',
+                text: 'Please try again with a valid request.',
+                icon: 'warning'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    }
+}
 
-
-
-
-
+// Check for semester inactivity status
+if (isset($_SESSION['STATUS'])) {
+    if ($_SESSION['STATUS'] == 'SEMESTER_INACTIVE') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Inactive!',
+                text: 'Semester made inactive successfully.',
+                icon: 'success'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    } elseif ($_SESSION['STATUS'] == 'SEMESTER_INACTIVE_ERROR' && isset($_SESSION['ERROR_MESSAGE'])) {
+        $errorMessage = $_SESSION['ERROR_MESSAGE'];
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Operation Failed!',
+                text: 'Error: {$errorMessage}',
+                icon: 'error'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+        unset($_SESSION['ERROR_MESSAGE']);
+    } elseif ($_SESSION['STATUS'] == 'INVALID_REQUEST') {
+        echo "
+        <script>
+            Swal.fire({
+                title: 'Invalid Request!',
+                text: 'Please try again with a valid request.',
+                icon: 'warning'
+            });
+        </script>
+        ";
+        unset($_SESSION['STATUS']);
+    }
+}
 ?>
-
-
-
-
-
-

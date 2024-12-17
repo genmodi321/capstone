@@ -10,4 +10,12 @@ try {
 } catch (PDOException $e) {
     echo json_encode(['success' => false, 'message' => $e->getMessage()]);
 }
+
+if (isset($_SERVER['HTTP_REFERER'])) {
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
+    exit();
+} else {
+    header('Location: ../../index.php'); // Fallback if no referrer
+    exit();
+}
 ?>

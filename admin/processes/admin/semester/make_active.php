@@ -1,5 +1,6 @@
 <?php
-require '../../server/conn.php'; // Adjust the path based on your directory structure
+require '../../server/conn.php';
+session_start(); // Start session for status messages
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $semester_id = $_GET['id'];
@@ -9,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
         $pdo->beginTransaction();
 
         // Set all other semesters to 'inactive'
-        $updateOthersStmt = $pdo->prepare("UPDATE semester SET status = 'inactive' WHERE id != :id");
+        $updateOthersStmt = $pdo->prepare("UPDATE semester SET status = 'inactive' WHERE id != :id AND status != 'archived'");
         $updateOthersStmt->bindParam(':id', $semester_id);
         $updateOthersStmt->execute();
 
@@ -18,19 +19,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
         $setActiveStmt->bindParam(':id', $semester_id);
         $setActiveStmt->execute();
 
+        // Fetch the active semester name
+        $getActiveSemesterStmt = $pdo->prepare("SELECT name FROM semester WHERE id = :id");
+        $getActiveSemesterStmt->bindParam(':id', $semester_id);
+        $getActiveSemesterStmt->execute();
+        $activeSemester = $getActiveSemesterStmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($activeSemester) {
+            // Delete any existing data in the current_semester table
+            $deleteCurrentSemesterStmt = $pdo->prepare("DELETE FROM current_semester");
+            $deleteCurrentSemesterStmt->execute();
+
+            // Insert the new active semester into the current_semester table
+            $insertCurrentSemesterStmt = $pdo->prepare("INSERT INTO current_semester (semester) VALUES (:semester)");
+            $insertCurrentSemesterStmt->bindParam(':semester', $activeSemester['name']);
+            $insertCurrentSemesterStmt->execute();
+        }
+
         // Commit the transaction
         $pdo->commit();
-
-        // Redirect back to the page or display success message
-        header("Location: semesters.php?success=Semester activated successfully");
-        exit();
+        
+        $_SESSION['STATUS'] = "SEMESTER_ACTIVATED";
     } catch (PDOException $e) {
         // Rollback transaction if something went wrong
         $pdo->rollBack();
-        echo "Error: " . $e->getMessage();
+        $_SESSION['STATUS'] = "SEMESTER_ACTIVATION_ERROR";
+        $_SESSION['ERROR_MESSAGE'] = $e->getMessage();
     }
+
+    // Redirect to semesters.php
+    header("Location: ../../../semester_management.php");
+    exit();
 } else {
-    header("Location: semesters.php?error=Invalid request");
+    $_SESSION['STATUS'] = "INVALID_REQUEST";
+    header("Location: ../../../semester_management.php");
     exit();
 }
-?>

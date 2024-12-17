@@ -27,13 +27,13 @@ try {
         $note = $stmt->fetch(PDO::FETCH_ASSOC);
 
         $_SESSION['STATUS'] = "ADD_NOTES_SUCCESS";
-        header("Location: ../../../dashboard.php");
+        header("Location: ../../../index.php");
     } else {
         $_SESSION['STATUS'] = "ADD_NOTES_FAIL";
-        header("Location: ../../../dashboard.php");
+        header("Location: ../../../index.php");
     }
 } catch (PDOException $e) {
     $_SESSION['STATUS'] = "ADD_NOTES_FAIL";
-        header("Location: ../../../dashboard.php");
+        header("Location: ../../../index.php");
 }
 ?>

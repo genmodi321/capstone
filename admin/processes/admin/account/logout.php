@@ -7,6 +7,6 @@ session_destroy();
 
 session_start();
 $_SESSION['STATUS'] = "LOG_OUT_SUCCESFUL";
-header("Location: ../../../admin_login_page.php");
+header("Location: ../../../../login/index.php");
 exit();
 ?>

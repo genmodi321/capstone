@@ -1,5 +1,6 @@
 <?php
-require '../../server/conn.php'; // Adjust the path based on your directory structure
+require '../../server/conn.php';
+session_start(); // Start session for status messages
 
 if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
     $id = $_GET['id'];
@@ -13,18 +14,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['id'])) {
         
         // Execute the statement
         if ($stmt->execute()) {
-            header("Location: ../../admin/semesters.php?success=Semester made inactive successfully");
-            exit;
+            $_SESSION['STATUS'] = "SEMESTER_INACTIVE";
         } else {
-            header("Location: ../../admin/semesters.php?error=Failed to make semester inactive");
-            exit;
+            $_SESSION['STATUS'] = "SEMESTER_INACTIVE_ERROR";
         }
     } catch (PDOException $e) {
-        header("Location: ../../admin/semesters.php?error=" . $e->getMessage());
-        exit;
+        $_SESSION['STATUS'] = "SEMESTER_INACTIVE_ERROR";
+        $_SESSION['ERROR_MESSAGE'] = $e->getMessage();
     }
+    
+    // Redirect to semesters.php
+    header("Location: ../../../semester_management.php");
+    exit;
 } else {
-    header("Location: ../../admin/semesters.php");
+    $_SESSION['STATUS'] = "INVALID_REQUEST";
+    header("Location: ../../../semester_management.php");
     exit;
 }
-?>

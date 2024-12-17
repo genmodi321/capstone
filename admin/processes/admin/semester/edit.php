@@ -1,5 +1,6 @@
 <?php
-require '../../server/conn.php'; // Adjust the path based on your directory structure
+require '../../server/conn.php';
+session_start(); // Start session for status messages
 
 if (isset($_GET['id']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_GET['id'];
@@ -8,6 +9,7 @@ if (isset($_GET['id']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
     $end_date = $_POST['end_date'];
     $description = $_POST['description'];
 
+    // Check for empty fields
     if (!empty($name) && !empty($start_date) && !empty($end_date) && !empty($description)) {
         try {
             // Prepare the update statement
@@ -22,22 +24,22 @@ if (isset($_GET['id']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
             
             // Execute the statement
             if ($stmt->execute()) {
-                header("Location: ../../admin/semesters.php?success=Semester updated successfully");
-                exit;
+                $_SESSION['STATUS'] = "SEMESTER_UPDATE_SUCCESS";
             } else {
-                header("Location: ../../admin/semesters.php?error=Failed to update semester");
-                exit;
+                $_SESSION['STATUS'] = "SEMESTER_UPDATE_FAILED";
             }
         } catch (PDOException $e) {
-            header("Location: ../../admin/semesters.php?error=" . $e->getMessage());
-            exit;
+            $_SESSION['STATUS'] = "SEMESTER_UPDATE_ERROR";
+            $_SESSION['ERROR_MESSAGE'] = $e->getMessage();
         }
     } else {
-        header("Location: ../../admin/semesters.php?error=All fields are required");
-        exit;
+        $_SESSION['STATUS'] = "SEMESTER_FIELDS_EMPTY";
     }
+
+    // Redirect to semesters.php with session-based SweetAlert
+    header("Location: ../../../semester_management.php");
+    exit;
 } else {
-    header("Location: ../../admin/semesters.php");
+    header("Location: ../../../semester_management.php");
     exit;
 }
-?>

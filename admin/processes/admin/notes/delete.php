@@ -11,7 +11,7 @@ try {
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         if ($stmt->execute()) {
             $_SESSION['STATUS'] = "NOTES_DELETED_SUCCESFULLY";
-            header("Location: ../../../dashboard.php");
+            header("Location: ../../../index.php");
             exit();
         } else {
             echo "Error: Could not delete the note.";

@@ -9,14 +9,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $department = $_POST['department'];
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
-    $class = $_POST['class'];
+    $class = !empty($_POST['class']) ? $_POST['class'] : 'None'; // Handle empty class
     $phone_number = $_POST['phone_number'];
     $gender = $_POST['gender'];
 
     // Check if password and confirm password match
     if ($password !== $confirm_password) {
         $_SESSION['STATUS'] = "PASSWORD_MISMATCH";
-        header('Location: ../../../staff_management.php');
+        header('Location: ../../../teacher_management.php');
         exit;
     }
 
@@ -30,8 +30,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($checkStmt->rowCount() > 0) {
             // Email already exists
             $_SESSION['STATUS'] = "STAFF_EMAIL_EXISTS";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
             exit;
+        }
+
+        // Check if the class already exists for the same department
+        if ($class !== 'None') {  // Skip this check for 'None' value in class
+            $checkClassSql = "SELECT * FROM staff_accounts WHERE department = :department AND class = :class";
+            $checkClassStmt = $pdo->prepare($checkClassSql);
+            $checkClassStmt->bindParam(':department', $department);
+            $checkClassStmt->bindParam(':class', $class);
+            $checkClassStmt->execute();
+
+            if ($checkClassStmt->rowCount() > 0) {
+                // Class already exists in this department
+                $_SESSION['STATUS'] = "CLASS_DUPLICATE";
+                header('Location: ../../../teacher_management.php');
+                exit;
+            }
         }
 
         // SQL query to insert a new staff account
@@ -56,15 +72,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Execute and handle result
         if ($stmt->execute()) {
             $_SESSION['STATUS'] = "STAFF_ADDED_SUCCESSFULLY";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
         } else {
             $_SESSION['STATUS'] = "STAFF_ADDED_ERROR";
-            header('Location: ../../../staff_management.php');
+            header('Location: ../../../teacher_management.php');
         }
     } catch (PDOException $e) {
         $_SESSION['STATUS'] = "STAFF_ADDED_ERROR";
         // Optionally, log or echo the error during development
         // echo "Error: " . $e->getMessage();
-        header('Location: ../../../staff_management.php');
+        header('Location: ../../../teacher_management.php');
     }
 }

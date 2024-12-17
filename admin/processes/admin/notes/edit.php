@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($stmt->execute()) {
             $_SESSION['STATUS'] = "NOTES_EDITION_SUCCESFUL";
-            header("Location: ../../../dashboard.php");
+            header("Location: ../../../index.php");
             exit();
         } else {
             echo "Error updating note.";

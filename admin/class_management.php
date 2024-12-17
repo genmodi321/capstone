@@ -5,6 +5,7 @@ if (!isset($_SESSION['admin_id'])) {
 	header("Location: admin_login_page.php");
 }
 include('processes/server/conn.php');
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,13 +15,13 @@ include('processes/server/conn.php');
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<title>WMSU - CCS | Comprehensive Student Management System</title>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.dataTables.min.css">
-	<link rel="stylesheet"
-		href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
@@ -54,7 +55,7 @@ include('processes/server/conn.php');
 	<div class="wrapper">
 		<?php
 		include('sidebar.php')
-		?>
+			?>
 
 		<div class="main">
 			<nav class="navbar navbar-expand navbar-light navbar-bg">
@@ -82,13 +83,12 @@ include('processes/server/conn.php');
 
 								<div class="card-header">
 									<div class="d-flex align-items-center">
-										<h5 class="h5 mb-3"><a
-												href="index.php"
-												class="nav-ham-link">Home</a> / <span>Class Management</span></h5>
+										<h5 class="h5 mb-3"><a href="index.php" class="nav-ham-link">Home</a> /
+											<span>Class Management</span>
+										</h5>
 
 										<div class="ms-auto" aria-hidden="true">
-											<img
-												src="external/svgs/undraw_favorite_gb6n.svg"
+											<img src="external/svgs/undraw_favorite_gb6n.svg"
 												class=" small-picture img-fluid">
 										</div>
 									</div>
@@ -99,19 +99,21 @@ include('processes/server/conn.php');
 										<div class="d-flex align-items-center">
 											<h3>Class List</h3>
 											<div class="ms-auto" aria-hidden="true">
-												<button type="button" class="btn btn-csms" data-bs-toggle="modal" data-bs-target="#createClassModal">
+												<button type="button" class="btn btn-csms" data-bs-toggle="modal"
+													data-bs-target="#createClassModal">
 													<i class="bi bi-pencil-square"></i> Create a Class
 												</button>
 
 												<!-- Assign Subject Class button with dropdown -->
-												<button type="button" class="btn btn-csms dropdown-toggle" data-bs-toggle="dropdown">
+												<button type="button" class="btn btn-csms dropdown-toggle"
+													data-bs-toggle="dropdown">
 													<i class="bi bi-folder2-open"></i> Assign a Subject Class
 												</button>
 
 												<div class="dropdown-menu" style="padding: 10px;">
 													<small>Assigned Classes</small>
 													<!-- Class selection dropdown -->
-													<select class="form-select" id="class-select">
+													<select class="form-select" id="class-select" required>
 														<option selected disabled>Select a class</option>
 														<optgroup label="Department of Information Technology">
 															<option value="BSIT-1A">BSIT - 1A</option>
@@ -137,7 +139,7 @@ include('processes/server/conn.php');
 
 													<small>Available Subject List</small>
 													<!-- Subject selection dropdown -->
-													<select class="form-select" id="subject-select">
+													<select class="form-select" id="subject-select" required>
 														<option selected disabled>Select a subject</option>
 														<!-- Subject options will be populated dynamically from the database -->
 														<?php
@@ -176,20 +178,23 @@ include('processes/server/conn.php');
 														<div class="row text-center" id="assigned-subjects-container">
 															<!-- Assigned subjects will be appended here dynamically -->
 															<div class="col">
-																<small id="assigned-subject">No subjects assigned</small>
+																<small id="assigned-subject">No subjects
+																	assigned</small>
 															</div>
 														</div>
 													</div>
 
 													<!-- Update Class button, initially hidden -->
-													<button type="button" class="btn btn-primary mt-3" id="update-class-btn" style="display: none;" onclick="updateAssignedClass()">
+													<button type="button" class="btn btn-primary mt-3"
+														id="update-class-btn" style="display: none;"
+														onclick="updateAssignedClass()">
 														Update Class
 													</button>
 												</div>
 											</div>
 
 											<script>
-												document.getElementById('subject-select').addEventListener('change', function() {
+												document.getElementById('subject-select').addEventListener('change', function () {
 													const selectedSubjectId = this.value;
 													const selectedSubjectText = this.options[this.selectedIndex].text;
 
@@ -205,11 +210,11 @@ include('processes/server/conn.php');
 													newSubjectRow.setAttribute('id', `assigned-subject-${selectedSubjectId}`);
 
 													newSubjectRow.innerHTML = `
-        <div class="col">
-            <small>${selectedSubjectText}</small>
-            <button class="btn btn-danger btn-sm" onclick="removeAssignedSubject(${selectedSubjectId})">Remove</button>
-        </div>
-    `;
+		<div class="col">
+			<small>${selectedSubjectText}</small>
+			<button class="btn btn-danger btn-sm" onclick="removeAssignedSubject(${selectedSubjectId})">Remove</button>
+		</div>
+	`;
 													assignedSubjectsContainer.appendChild(newSubjectRow);
 													document.getElementById('update-class-btn').style.display = 'block';
 												});
@@ -231,15 +236,15 @@ include('processes/server/conn.php');
 														assignedSubjects.push(subjectId);
 													});
 													fetch('update_assigned_subjects.php', {
-															method: 'POST',
-															headers: {
-																'Content-Type': 'application/json',
-															},
-															body: JSON.stringify({
-																class: document.getElementById('class-select').value,
-																subjects: assignedSubjects
-															})
+														method: 'POST',
+														headers: {
+															'Content-Type': 'application/json',
+														},
+														body: JSON.stringify({
+															class: document.getElementById('class-select').value,
+															subjects: assignedSubjects
 														})
+													})
 														.then(response => response.json())
 														.then(data => {
 															if (data.success) {
@@ -251,18 +256,18 @@ include('processes/server/conn.php');
 														.catch(error => console.error('Error updating class:', error));
 												}
 
-												document.getElementById('class-select').addEventListener('change', function() {
+												document.getElementById('class-select').addEventListener('change', function () {
 													const selectedClass = this.value;
 													const selectedSemester = document.getElementById('semester-select').value;
 
 													if (selectedClass && selectedSemester) {
 														fetch('get_subjects.php', {
-																method: 'POST',
-																headers: {
-																	'Content-Type': 'application/x-www-form-urlencoded',
-																},
-																body: `class=${selectedClass}&semester=${selectedSemester}`
-															})
+															method: 'POST',
+															headers: {
+																'Content-Type': 'application/x-www-form-urlencoded',
+															},
+															body: `class=${selectedClass}&semester=${selectedSemester}`
+														})
 															.then(response => response.text())
 															.then(data => {
 																document.getElementById('subject-select').innerHTML = data;
@@ -290,13 +295,14 @@ include('processes/server/conn.php');
 
 										if ($stmt->rowCount() > 0) {
 
-									?>
+											?>
 											<table id="classes" class=" responsive" style="width: 100%;">
 												<thead class="text-center">
 													<tr>
 														<th>Class Name</th>
-
+														<th>Adviser</th>
 														<th>Subject</th>
+
 														<th>Teacher</th>
 														<th>Semester</th>
 														<th>No. of Students</th>
@@ -306,8 +312,9 @@ include('processes/server/conn.php');
 												<tfoot class="text-center">
 													<tr>
 														<th>Class Name</th>
-
+														<th>Adviser</th>
 														<th>Subject</th>
+
 														<th>Teacher</th>
 														<th>Semester</th>
 														<th>No. of Students</th>
@@ -322,73 +329,132 @@ include('processes/server/conn.php');
 														$teacherStmt->bindParam(':id', $row['teacher'], PDO::PARAM_INT);
 														$teacherStmt->execute();
 														$teacher = $teacherStmt->fetch(PDO::FETCH_ASSOC);
-													?>
+
+														// Fetch meeting schedule details
+														$scheduleStmt = $pdo->prepare("SELECT meeting_days, start_time, end_time FROM subjects_schedules WHERE subject_id = :subject_id");
+														$scheduleStmt->bindParam(':subject_id', $row['subject_id'], PDO::PARAM_INT);
+														$scheduleStmt->execute();
+														$schedules = $scheduleStmt->fetchAll(PDO::FETCH_ASSOC);
+
+														// Format schedule information
+														$scheduleDetails = [];
+														foreach ($schedules as $schedule) {
+															$formattedTime = date("h:i A", strtotime($schedule['start_time'])) . " - " . date("h:i A", strtotime($schedule['end_time']));
+															$scheduleDetails[] = "<strong>" . htmlspecialchars($schedule['meeting_days']) . "</strong>: " . $formattedTime;
+														}
+														$scheduleInfo = implode("<br>", $scheduleDetails); // Convert array to HTML line breaks for display
+											
+
+														?>
+
+														<?php
+														$query1 = "SELECT fullName FROM staff_accounts WHERE class = :class";
+														$stmt1 = $pdo->prepare($query1);
+														$stmt1->bindParam(':class', $row['name'], PDO::PARAM_STR);
+														$stmt1->execute();
+														$adviser = $stmt1->fetchColumn();
+														?>
 														<tr>
 															<td><?php echo htmlspecialchars($row['name']); ?></td>
+															<td><?php echo htmlspecialchars($adviser); ?></td>
 															<td>
-																<span class="alert alert-primary" style="padding:2px"><?php echo htmlspecialchars($row['type']); ?></span> <br>
+																<span class="alert alert-primary"
+																	style="padding:2px"><?php echo htmlspecialchars($row['type']); ?></span>
+																<br>
+
 																<?php echo htmlspecialchars($row['code']); ?> <br>
 
 
 																<?php echo htmlspecialchars($row['subject']); ?>
 															</td>
-															<td><?php echo htmlspecialchars($row['teacher']); ?></td> <!-- Use full name from fetched data -->
+
+															<td><?php echo htmlspecialchars($row['teacher']); ?></td>
+															<!-- Use full name from fetched data -->
 															<td><?php echo htmlspecialchars($row['semester']); ?></td>
-															<td><a href="#" style="color:black !important" data-bs-toggle="modal" data-bs-target="#studentModal">
+															<td><a href="#" style="color:black !important" data-bs-toggle="modal"
+																	data-bs-target="#studentModal">
 																	<?php echo htmlspecialchars($row['studentTotal']); ?>
 																</a></td>
 															<td>
 																<?php if ($row['status'] == 'pending'): ?>
-																	<span><b>This class is still pending for approval:</b></span><br><br>
-																	<span>Request made by:<b> <?php echo $row['requestor'] ?></b></span><br><br>
-																	<a href="processes/admin/classes/accept.php?id=<?php echo $row['id'] ?>"><button class='btn btn-success'> <small><i class='bi bi-check2-square'></i> Approve</small></button></a>
+																	<span><b>This class is still pending for
+																			approval:</b></span><br><br>
+																	<span>Request made by:<b>
+																			<?php echo $row['requestor'] ?></b></span><br><br>
 																	<a
-																		data-bs-toggle="modal" data-bs-target="#disapproveModal<?php echo $row['id'] ?>"><button class='btn btn-danger'> <small><i class='bi bi-x-circle-fill'></i> Disapprove</small></button></a>
+																		href="processes/admin/classes/accept.php?id=<?php echo $row['id'] ?>"><button
+																			class='btn btn-success'> <small><i
+																					class='bi bi-check2-square'></i>
+																				Approve</small></button></a>
+																	<a data-bs-toggle="modal"
+																		data-bs-target="#disapproveModal<?php echo $row['id'] ?>"><button
+																			class='btn btn-danger'> <small><i
+																					class='bi bi-x-circle-fill'></i>
+																				Disapprove</small></button></a>
 																<?php elseif ($row['status'] == 'disapproved'): ?>
 																	<span>This class has been rejected.
 																		<br> <br> <b>Reason:</b> <br>
 																		<?php echo $row['reason'] ?></span>
 																<?php else: ?>
-																	<button type='button' class='btn btn-primary' data-bs-toggle='modal' data-bs-target='#viewModal<?php echo $row['id']; ?>'>
+																	<button type='button' class='btn btn-primary' data-bs-toggle='modal'
+																		data-bs-target='#viewModal<?php echo $row['id']; ?>'>
 																		<i class='bi bi-eye'></i> View
 																	</button>
-																	<button type='button' class='btn btn-warning' data-bs-toggle='modal' data-bs-target='#editModal<?php echo $row['id']; ?>'>
+																	<button type='button' class='btn btn-warning' data-bs-toggle='modal'
+																		data-bs-target='#editModal<?php echo $row['id']; ?>'>
 																		<i class='bi bi-pencil'></i> Edit
 																	</button>
-																	<button type="button" class="btn btn-danger" onclick="confirmDelete(<?php echo $row['id']; ?>)">
+																	<button type="button" class="btn btn-danger"
+																		onclick="confirmDelete(<?php echo $row['id']; ?>)">
 																		<i class="bi bi-trash"></i> Delete
 																	</button>
 																<?php endif; ?>
 															</td>
 														</tr>
 
-														<div class="modal fade" id="disapproveModal<?php echo $row['id'] ?>" tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
+														<div class="modal fade" id="disapproveModal<?php echo $row['id'] ?>"
+															tabindex="-1" aria-labelledby="disapproveModalLabel" aria-hidden="true">
 															<div class="modal-dialog">
 																<div class="modal-content">
 																	<div class="modal-header">
-																		<h5 class="modal-title" id="disapproveModalLabel">Disapprove Class</h5>
-																		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+																		<h5 class="modal-title" id="disapproveModalLabel">Disapprove
+																			Class</h5>
+																		<button type="button" class="btn-close"
+																			data-bs-dismiss="modal" aria-label="Close"></button>
 																	</div>
 																	<div class="modal-body">
-																		<form id="disapproveForm" action="processes/admin/classes/reject.php?id=<?php echo $row['id'] ?>" method="POST">
+																		<form id="disapproveForm"
+																			action="processes/admin/classes/reject.php?id=<?php echo $row['id'] ?>"
+																			method="POST">
 																			<div class="mb-3">
-																				<label for="disapproveReason" class="form-label">Select a Reason</label>
-																				<select class="form-control" id="disapproveReasonSelect" name="reason" required>
-																					<option value="" disabled selected>Select a reason</option>
-																					<option value="Incomplete information">Incomplete information</option>
-																					<option value="Class does not meet criteria">Class does not meet criteria</option>
-																					<option value="Duplicate class">Duplicate class</option>
+																				<label for="disapproveReason"
+																					class="form-label bold">Select a Reason</label>
+																				<select class="form-control"
+																					id="disapproveReasonSelect" name="reason"
+																					required>
+																					<option value="" disabled selected>Select a
+																						reason</option>
+																					<option value="Incomplete information">
+																						Incomplete information</option>
+																					<option value="Class does not meet criteria">
+																						Class does not meet criteria</option>
+																					<option value="Duplicate class">Duplicate class
+																					</option>
 																					<option value="Other">Other</option>
 																				</select>
 																			</div>
 
 																			<!-- Textbox for "Other" reason -->
-																			<div class="mb-3" id="otherReasonDiv" style="display: none;">
-																				<label for="otherReason" class="form-label">Other Reason</label>
-																				<textarea class="form-control" id="otherReason" name="other_reason" rows="3"></textarea>
+																			<div class="mb-3" id="otherReasonDiv"
+																				style="display: none;">
+																				<label for="otherReason"
+																					class="form-label bold">Other Reason</label>
+																				<textarea class="form-control" id="otherReason"
+																					name="other_reason" rows="3"></textarea>
 																			</div>
 
-																			<button type="submit" class="btn btn-danger">Submit Disapproval</button>
+																			<button type="submit" class="btn btn-danger">Submit
+																				Disapproval</button>
 																		</form>
 																	</div>
 																</div>
@@ -396,7 +462,7 @@ include('processes/server/conn.php');
 														</div>
 
 														<script>
-															document.getElementById('disapproveReasonSelect').addEventListener('change', function() {
+															document.getElementById('disapproveReasonSelect').addEventListener('change', function () {
 																var otherReasonDiv = document.getElementById('otherReasonDiv');
 																var otherReasonInput = document.getElementById('otherReason');
 
@@ -415,7 +481,7 @@ include('processes/server/conn.php');
 												</tbody>
 											</table>
 
-									<?php
+											<?php
 										} else {
 											echo "<h1 class='text-center'>No classes available</h1>";
 										}
@@ -447,51 +513,72 @@ include('processes/server/conn.php');
 		$staffList = $staffStmt->fetchAll(PDO::FETCH_ASSOC);
 
 		while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-	?>
-			<div class="modal fade" id="viewModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+
+			?>
+			<div class="modal fade" id="viewModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">Viewing Class Content for <?php echo htmlspecialchars($row['name']); ?></h1>
+							<h1 class="modal-title fs-5" id="exampleModalLabel"><b>Viewing Class Content for
+									<?php echo htmlspecialchars($row['name']); ?></b></h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
 							<div class="mb-3">
 								<label class="form-label bold">Class:</label>
-								<input type="text" class="form-control" value="<?php echo htmlspecialchars($row['name']); ?>" readonly>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars($row['name']); ?>" readonly>
+							</div>
+							<div class="mb-3">
+								<label class="form-label bold">Class Adviser:</label>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars($adviser); ?>" readonly>
 							</div>
 							<div class="mb-3">
 								<label class="form-label bold">Subject Type:</label>
-								<input type="text" class="form-control" value="<?php echo htmlspecialchars($row['type']); ?>" readonly>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars($row['type']); ?>" readonly>
 							</div>
 							<div class="mb-3">
 								<label class="form-label bold">Subject Name:</label>
-								<input type="text" class="form-control" value="<?php echo htmlspecialchars($row['subject']); ?>" readonly>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars($row['subject']); ?>" readonly>
 							</div>
 							<div class="mb-3">
 								<label class="form-label bold">Teacher:</label>
-								<input type="text" class="form-control" value="<?php echo htmlspecialchars($row['teacher']); ?>" readonly>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars($row['teacher']); ?>" readonly>
 							</div>
 							<div class="mb-3">
 								<label class="form-label bold">Semester:</label>
-								<input type="text" class="form-control" value="<?php echo htmlspecialchars($row['semester']); ?>" readonly>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars($row['semester']); ?>" readonly>
 							</div>
 							<div class="mb-3">
 								<label class="form-label bold">Class Description:</label>
-								<input type="text" class="form-control" value="<?php echo htmlspecialchars($row['description']); ?>" readonly>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars($row['description']); ?>" readonly>
 							</div>
 							<div class="mb-3">
-								<label class="form-label bold">Class Code: &nbsp; <button class="btn btn-primary copy-btn" style="padding: 3px; font-size: 12px;" onclick="copyText<?php echo $row['classCode']; ?>()">
+								<label class="form-label bold">Class Code: &nbsp; <button class="btn btn-primary copy-btn"
+										style="padding: 3px; font-size: 12px;"
+										onclick="copyText<?php echo $row['classCode']; ?>()">
 										<i class="bi bi-clipboard-fill"></i>
 									</button></label>
 								<div class="input-group">
-									<input type="text" class="form-control" id="text-to-copy-<?php echo $row['classCode']; ?>" value="<?php echo htmlspecialchars($row['classCode']); ?>" readonly>
+									<input required type="text" class="form-control"
+										id="text-to-copy-<?php echo $row['classCode']; ?>"
+										value="<?php echo htmlspecialchars($row['classCode']); ?>" readonly>
 
 								</div>
 							</div>
 							<div class="mb-3">
 								<label class="form-label bold">Date and Time Added:</label>
-								<input type="text" class="form-control" value="<?php echo htmlspecialchars(date('Y-m-d h:i A', strtotime($row['datetime_added']))); ?>" readonly>
+								<input required type="text" class="form-control"
+									value="<?php echo htmlspecialchars(date('Y-m-d h:i A', strtotime($row['datetime_added']))); ?>"
+									readonly>
 							</div>
 						</div>
 						<div class="modal-footer">
@@ -506,7 +593,7 @@ include('processes/server/conn.php');
 				function copyText<?php echo $row['classCode'] ?>() {
 					var text = document.getElementById("text-to-copy-<?php echo $row['classCode'] ?>").innerText;
 
-					navigator.clipboard.writeText(text).then(function() {
+					navigator.clipboard.writeText(text).then(function () {
 						// Show SweetAlert on successful copy
 						Swal.fire({
 							icon: 'success',
@@ -515,7 +602,7 @@ include('processes/server/conn.php');
 							showConfirmButton: false,
 							timer: 1500
 						});
-					}).catch(function(error) {
+					}).catch(function (error) {
 						Swal.fire({
 							icon: 'error',
 							title: 'Oops...',
@@ -529,11 +616,13 @@ include('processes/server/conn.php');
 			</script>
 
 			<!-- Edit Modal -->
-			<div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			<div class="modal fade" id="editModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel"
+				aria-hidden="true">
 				<div class="modal-dialog modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h1 class="modal-title fs-5" id="exampleModalLabel">Editing Class Content for <?php echo htmlspecialchars($row['name']); ?></h1>
+							<h1 class="modal-title fs-5" id="exampleModalLabel"><b>Editing Class Content for
+									<?php echo htmlspecialchars($row['name']); ?></b></h1>
 							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 						</div>
 						<div class="modal-body">
@@ -541,8 +630,10 @@ include('processes/server/conn.php');
 								<input type="hidden" name="id" value="<?php echo $row['id']; ?>">
 								<div class="mb-3">
 									<label for="class" class="form-label bold">Select Class: </label>
-									<select class="form-select" name="class">
-										<option value="<?php echo htmlspecialchars($row['name']); ?>" selected><?php echo htmlspecialchars($row['name']); ?></option>
+									<select class="form-select" name="class" required>
+										<option value="<?php echo htmlspecialchars($row['name']); ?>" selected>
+											<?php echo htmlspecialchars($row['name']); ?>
+										</option>
 										<?php
 										$sections = [
 											"BSIT-1A",
@@ -572,14 +663,16 @@ include('processes/server/conn.php');
 								</div>
 								<div class="mb-3">
 									<label for="subjectName" class="form-label bold">Select Subject Name: </label>
-									<select class="form-select" name="subjectName">
-										<option value="<?php echo htmlspecialchars($row['subject']); ?>" selected><?php echo htmlspecialchars($row['subject']); ?></option>
+									<select class="form-select" name="subjectName" required>
+										<option value="<?php echo htmlspecialchars($row['subject']); ?>" selected>
+											<?php echo htmlspecialchars($row['subject']); ?>
+										</option>
 
 									</select>
 								</div>
 								<div class="mb-3">
 									<label for="teacher" class="form-label bold">Select Teacher: </label>
-									<select class="form-select" name="teacher">
+									<select class="form-select" name="teacher" required>
 										<?php
 										foreach ($staffList as $staff) {
 											// Check if the current teacher's fullName matches the selected teacher
@@ -595,13 +688,16 @@ include('processes/server/conn.php');
 								<div class="mb-3">
 									<label for="semester" class="form-label bold">Select Semester: </label>
 									<select class="form-select" name="semester">
-										<option value="<?php echo htmlspecialchars($row['semester']); ?>" selected><?php echo htmlspecialchars($row['semester']); ?></option>
+										<option value="<?php echo htmlspecialchars($row['semester']); ?>" selected>
+											<?php echo htmlspecialchars($row['semester']); ?>
+										</option>
 
 									</select>
 								</div>
 								<div class="mb-3">
 									<label for="classDesc" class="form-label bold">Class Description</label>
-									<textarea class="form-control" id="classDesc" name="classDesc"><?php echo htmlspecialchars($row['description']); ?></textarea>
+									<textarea class="form-control" id="classDesc"
+										name="classDesc"><?php echo htmlspecialchars($row['description']); ?></textarea>
 								</div>
 						</div>
 						<div class="modal-footer">
@@ -612,7 +708,7 @@ include('processes/server/conn.php');
 					</div>
 				</div>
 			</div>
-	<?php
+			<?php
 		}
 	} catch (PDOException $e) {
 		echo "Error: " . $e->getMessage();
@@ -650,22 +746,18 @@ include('processes/server/conn.php');
 	include('processes/server/modals.php');
 	?>
 
-	<div class="modal fade" id="createClassModal" tabindex="-1"
-		aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal fade" id="createClassModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-dialog-centered">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h1 class="modal-title fs-5"
-						id="exampleModalLabel">Create a Class</h1>
-					<button type="button" class="btn-close"
-						data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<h1 class="modal-title fs-5" id="exampleModalLabel"><b>Create a Class</b></h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 					<form id="addClassForm" action="processes/admin/classes/add.php" method="POST">
 						<div class="mb-3">
-							<label for="class" class="form-label">Select Class:</label>
-							<select class="form-select" name="class" required>
+							<label for="class" class="form-label bold">Select Class:</label>
+							<select class="form-select" name="class" id="classSelect" required>
 								<option selected disabled>Select a class</option>
 								<optgroup label="Department of Information Technology">
 									<option value="BSIT-1A">BSIT - 1A</option>
@@ -689,54 +781,124 @@ include('processes/server/conn.php');
 								</optgroup>
 							</select>
 						</div>
+
+
+
 						<div class="mb-3">
-							<label for="subjectName" class="form-label">Select Subject Name: </label>
+							<label for="adviser" class="form-label bold">Assigned Adviser:</label>
+							<input type="text" class="form-control" id="assignedAdviser" name="assignedAdviser"
+								readonly>
+						</div>
+
+						<div class="mb-3">
+							<label for="subjectName" class="form-label bold">Select Subject Name: </label>
 							<?php
 							try {
-								$stmt = $pdo->prepare("SELECT id, name, semester FROM subjects ORDER BY name");
+								$stmt = $pdo->prepare("SELECT id, name, semester, type FROM subjects ORDER BY name");
 								$stmt->execute();
 								$subjects = $stmt->fetchAll(PDO::FETCH_ASSOC);
 							} catch (PDOException $e) {
 								echo "Error: " . $e->getMessage();
 							}
 							?>
-
-							<select class="form-select" name="subjectName">
+							<select class="form-select" id="subjectName" name="subjectName" required>
 								<?php if (!empty($subjects)): ?>
 									<option value="" selected>Select a subject</option>
-									<?php foreach ($subjects as $row): ?>
-										<option value="<?php echo htmlspecialchars($row['name']); ?>">
-											<?php echo htmlspecialchars($row['name']) . ' (' . htmlspecialchars($row['semester']) . ')'; ?>
-										</option>
-									<?php endforeach; ?>
+									<?php
+									// Filter unique subject names
+									$uniqueSubjects = [];
+									foreach ($subjects as $row) {
+										if (!in_array($row['name'], $uniqueSubjects)) {
+											$uniqueSubjects[] = $row['name'];
+											echo '<option value="' . htmlspecialchars($row['name']) . '">' . htmlspecialchars($row['name']) . '</option>';
+										}
+									}
+									?>
 								<?php else: ?>
 									<option value="" selected>No subjects added yet</option>
 								<?php endif; ?>
 							</select>
-
 						</div>
+
 						<div class="mb-3">
-							<label for="teacher" class="form-label">Select Teacher: </label>
+							<label for="subjectType" class="form-label bold">Subject Type: </label>
+							<select class="form-select" id="subjectType" name="subjectType" required>
+								<option value="" selected>Select a type</option>
+							</select>
+						</div>
+
+
+						<script>
+							document.getElementById('subjectName').addEventListener('change', function () {
+								const subjectName = this.value;
+
+								const subjectTypeSelect = document.getElementById('subjectType');
+								subjectTypeSelect.innerHTML = '<option value="" selected>Select a type</option>'; // Reset options
+
+								if (subjectName) {
+									// Fetch types dynamically
+									const url = `get_subject_type.php?subjectName=${encodeURIComponent(subjectName)}`;
+
+									fetch(url, {
+										method: 'GET',
+										headers: {
+											'Content-Type': 'application/x-www-form-urlencoded'
+										}
+									})
+										.then(response => {
+											if (!response.ok) {
+												throw new Error('Network response was not ok');
+											}
+											return response.json();
+										})
+										.then(data => {
+											if (data.types && data.types.length > 0) {
+												// Populate select with the types
+												data.types.forEach(type => {
+													const option = document.createElement('option');
+													option.value = type;
+													option.textContent = type;
+													subjectTypeSelect.appendChild(option);
+												});
+											} else {
+												// Handle case where no types are found
+												const option = document.createElement('option');
+												option.value = '';
+												option.textContent = 'No types found';
+												subjectTypeSelect.appendChild(option);
+											}
+										})
+										.catch(error => {
+											console.error('Error:', error);
+											alert('An error occurred while fetching the subject types. Please try again.');
+										});
+								}
+							});
+
+						</script>
+
+						<div class="mb-3">
+							<label for="teacher" class="form-label bold">Select Teacher: </label>
 							<select class="form-select" name="teacher" required>
 								<?php
 								require 'processes/server/conn.php';
 								$sql = "SELECT id, fullName FROM staff_accounts";
 								$stmt = $pdo->query($sql);
 								if ($stmt->rowCount() > 0) {
-									echo '<option selected>Select teacher below</option>';
+									echo '<option value="" selected>Select teacher below</option>'; // Value is empty to enforce validation
 									while ($teacher = $stmt->fetch(PDO::FETCH_ASSOC)) {
-										echo '<option value="' . htmlspecialchars($teacher["fullName"], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($teacher["fullName"], ENT_QUOTES, 'UTF-8') . '</option>';
+										echo '<option value="' . htmlspecialchars($teacher["id"], ENT_QUOTES, 'UTF-8') . '">' .
+											htmlspecialchars($teacher["fullName"], ENT_QUOTES, 'UTF-8') . '</option>';
 									}
 								} else {
-									echo '<option>There is no staff added yet!</option>';
+									echo '<option value="">There is no staff added yet!</option>';
 								}
 								?>
-
-
 							</select>
+
 						</div>
 						<div class="mb-3">
-							<label for="semester" class="form-label">Select Semester:</label>
+							<label for="semester" class="form-label bold">Select Semester:</label>
 							<select class="form-select" name="semester" required>
 								<?php
 								$sql = "SELECT name FROM semester ORDER BY name ";
@@ -756,8 +918,11 @@ include('processes/server/conn.php');
 
 							</select>
 						</div>
+
+
+
 						<div class="mb-3">
-							<label for="classDesc" class="form-label">Class Description:</label>
+							<label for="classDesc" class="form-label bold">Class Description:</label>
 							<textarea class="form-control" id="classDesc" name="classDesc" required></textarea>
 						</div>
 						<div class="modal-footer">
@@ -771,6 +936,31 @@ include('processes/server/conn.php');
 		</div>
 	</div>
 
+	<script>
+		document.getElementById('classSelect').addEventListener('change', function () {
+			const selectedClass = this.value;
+			fetch('getAdviser.php', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded'
+				},
+				body: 'class=' + encodeURIComponent(selectedClass)
+			})
+				.then(response => response.json())
+				.then(data => {
+					const adviserField = document.getElementById('assignedAdviser');
+					if (data.fullName) {
+						adviserField.textContent = data.fullName;
+						adviserField.value = data.fullName;
+					} else {
+						adviserField.textContent = 'No adviser assigned';
+						adviserField.value = "";
+					}
+				})
+				.catch(error => console.error('Error fetching adviser:', error));
+		});
+	</script>
+
 
 
 	<script>
@@ -781,9 +971,9 @@ include('processes/server/conn.php');
 			document.querySelector("#currentTime").textContent = "The current date and time is: " + newTime;
 		}
 		setInterval(getTime, 100);
-		$(document).ready(function() {
+		$(document).ready(function () {
 			// Custom sorting for the 'status' column
-			$.fn.dataTable.ext.type.order['status-pre'] = function(data) {
+			$.fn.dataTable.ext.type.order['status-pre'] = function (data) {
 				if (data === 'pending') {
 					return 1;
 				} else if (data === 'accepted') {
@@ -807,31 +997,31 @@ include('processes/server/conn.php');
 			});
 
 			// Add dropdown for "Class Name" and "Semester" columns
-			$('#classes tfoot th').each(function(index) {
+			$('#classes tfoot th').each(function (index) {
 				var title = $(this).text();
 
 				if (title === 'Class Name') {
 					// Create dropdown for Class Name
 					$(this).html(`
-                <select class="class-name-selector">
-                    <option value="">All Classes</option>
-                    <option value="BSIT-1A">BSIT-1A</option>
-                    <option value="BSIT-1B">BSIT-1B</option>
-                    <option value="BSIT-2A">BSIT-2A</option>
-                    <option value="BSIT-2B">BSIT-2B</option>
-                    <option value="BSIT-3A">BSIT-3A</option>
-                    <option value="BSIT-3B">BSIT-3B</option>
-                    <option value="BSIT-4A">BSIT-4A</option>
-                    <option value="BSCS-1A">BSCS-1A</option>
-                    <option value="BSCS-2A">BSCS-2A</option>
-                    <option value="BSCS-3A">BSCS-3A</option>
-                    <option value="BSCS-4A">BSCS-4A</option>
-                </select>
-            `);
+				<select class="class-name-selector" >
+					<option value="">All Classes</option>
+					<option value="BSIT-1A">BSIT-1A</option>
+					<option value="BSIT-1B">BSIT-1B</option>
+					<option value="BSIT-2A">BSIT-2A</option>
+					<option value="BSIT-2B">BSIT-2B</option>
+					<option value="BSIT-3A">BSIT-3A</option>
+					<option value="BSIT-3B">BSIT-3B</option>
+					<option value="BSIT-4A">BSIT-4A</option>
+					<option value="BSCS-1A">BSCS-1A</option>
+					<option value="BSCS-2A">BSCS-2A</option>
+					<option value="BSCS-3A">BSCS-3A</option>
+					<option value="BSCS-4A">BSCS-4A</option>
+				</select>
+			`);
 				} else if (title === 'Semester') {
 					// Create dropdown for Semester
 					$(this).html(`
-                <select class="semester-selector">
+				<select class="semester-selector">
 				<?php
 				$sql = "SELECT * FROM semester";
 				$stmt = $pdo->query($sql);
@@ -843,8 +1033,8 @@ include('processes/server/conn.php');
 					echo "<option value='' disabled>No semesters available</option>";
 				}
 				?>
-                </select>
-            `);
+				</select>
+			`);
 				} else {
 					// For other columns, add text input for search
 					$(this).html('<input type="text" placeholder="Search ' + title + '" />');
@@ -852,25 +1042,25 @@ include('processes/server/conn.php');
 			});
 
 			// Implement search functionality for text inputs and dropdowns
-			table.columns().every(function() {
+			table.columns().every(function () {
 				var that = this;
 
 				// Search for text input
-				$('input', this.footer()).on('keyup change clear', function() {
+				$('input', this.footer()).on('keyup change clear', function () {
 					if (that.search() !== this.value) {
 						that.search(this.value).draw();
 					}
 				});
 
 				// Search for Class Name dropdown
-				$('select.class-name-selector', this.footer()).on('change', function() {
+				$('select.class-name-selector', this.footer()).on('change', function () {
 					if (that.search() !== this.value) {
 						that.search(this.value).draw();
 					}
 				});
 
 				// Search for Semester dropdown
-				$('select.semester-selector', this.footer()).on('change', function() {
+				$('select.semester-selector', this.footer()).on('change', function () {
 					if (that.search() !== this.value) {
 						that.search(this.value).draw();
 					}
@@ -882,7 +1072,7 @@ include('processes/server/conn.php');
 		});
 
 
-		document.getElementById('messageForm').addEventListener('submit', function(event) {
+		document.getElementById('messageForm').addEventListener('submit', function (event) {
 			event.preventDefault();
 			var messageText = document.getElementById('messageInput').value;
 
@@ -894,14 +1084,14 @@ include('processes/server/conn.php');
 				var newMessage = document.createElement('div');
 				newMessage.className = 'row receiver';
 				newMessage.innerHTML = `
-      
-            <div class="col">
-              <div class="message">
-                 <span>${messageText}</span>
-              </div>
-              <i class="bi bi-person"></i>
-            </div>
-      `;
+	  
+			<div class="col">
+			  <div class="message">
+				 <span>${messageText}</span>
+			  </div>
+			  <i class="bi bi-person"></i>
+			</div>
+	  `;
 				chatBody.appendChild(newMessage);
 				document.getElementById('messageInput').value = '';
 				chatBody.scrollTop = chatBody.scrollHeight;

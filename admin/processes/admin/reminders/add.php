@@ -1,5 +1,4 @@
 <?php
-
 session_start();
 date_default_timezone_set('Asia/Manila');
 include('../../server/conn.php');
@@ -13,7 +12,9 @@ try {
         $description = htmlspecialchars($_POST['description']);
         $level = htmlspecialchars($_POST['status']);    
         $due_date = $_POST['due_date'];
-        $due_time = $_POST['due_time'];
+
+        // Convert 24-hour format to 12-hour format with AM/PM
+        $due_time = date("h:i A", strtotime($_POST['due_time']));
 
         $sql = "INSERT INTO admin_reminders (title, description, level, due_date, due_time, datetime_created) 
                 VALUES (:title, :description, :level, :due_date, :due_time, NOW())";
@@ -27,17 +28,14 @@ try {
         $stmt->bindParam(':due_time', $due_time);
         
         if ($stmt->execute()) {
-          
-        $_SESSION['STATUS'] = "ADD_REMINDER_SUCCESS";
-        header("Location: ../../../dashboard.php");
+            $_SESSION['STATUS'] = "ADD_REMINDER_SUCCESS";
+            header("Location: ../../../index.php");
         } else {
-          
-        $_SESSION['STATUS'] = "ADD_REMIDER_FAIL";
-        header("Location: ../../../dashboard.php");
+            $_SESSION['STATUS'] = "ADD_REMINDER_FAIL";
+            header("Location: ../../../index.php");
         }
     }
 } catch (PDOException $e) {
-
-    $_SESSION['STATUS'] = "ADD_REMIDER_FAIL";
-    header("Location: ../../../dashboard.php");
+    $_SESSION['STATUS'] = "ADD_REMINDER_FAIL";
+    header("Location: ../../../index.php");
 }
